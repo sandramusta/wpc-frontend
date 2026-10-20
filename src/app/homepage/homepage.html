@@ -1,12 +1,73 @@
 <section class="hero">
-    <h1>Hooldusvaba privaatsus sinu paneelaiale</h1>
-    <p>WPC aialipid 3D paneelaedadele. Viis kõrgust, kaks värvi.</p>
+    <div class="container">
+        <h1>Hooldusvaba privaatsus sinu hoovis</h1>
+        <p>WPC aialipid paigaldad olemasolevale 3D paneelaiale. Naabrid ei näe enam otse hoovi ja värvima ei pea kunagi.
+        </p>
+        <a href="#toode" class="btn">Vali kõrgus ja värv</a>
+    </div>
 </section>
 
-<section class="content">
-    @for (product of products; track product.id) {
-    <h2>{{ product.name }}</h2>
-    <p>{{ product.description }}</p>
-    <p>Variante: {{ product.variants.length }}</p>
-    }
+@if (product) {
+<section id="toode" class="container product">
+    <div class="picture">
+        <div class="slats">
+            @for (s of slats; track $index) {
+            <div class="slat" [style.height.px]="slatHeight()" [style.background]="colorHex[selectedColor]"></div>
+            }
+        </div>
+        <span class="picture-label">{{ selectedColor }}, {{ heightLabel(selectedHeight) }}</span>
+    </div>
+
+    <div class="info">
+        <span class="badge">Testitud Tallinna Tehnikaülikoolis</span>
+        <h2>{{ product.name }}</h2>
+        <p class="muted">{{ product.description }}</p>
+
+        <div class="price">
+            <span class="price-big">{{ euro(selectedVariant()?.price ?? 0) }}</span>
+            <span class="muted">komplekt, sis. KM</span>
+        </div>
+
+        <div class="group">
+            <span class="label">Paneeli kõrgus</span>
+            <div class="pills">
+                @for (h of heights(); track h) {
+                <button type="button" class="pill" [class.selected]="h === selectedHeight" (click)="selectHeight(h)">{{
+                    heightLabel(h) }}</button>
+                }
+            </div>
+        </div>
+
+        <div class="group">
+            <span class="label">Värv: {{ selectedColor }}</span>
+            <div class="swatches">
+                @for (c of product.colors; track c) {
+                <button type="button" class="swatch" [class.selected]="c === selectedColor"
+                    [style.background]="colorHex[c]" [attr.aria-label]="c" (click)="selectColor(c)"></button>
+                }
+            </div>
+        </div>
+
+        <div class="group">
+            <span class="label">Mitu paneeli sul on?</span>
+            <div class="qty-row">
+                <div class="stepper">
+                    <button type="button" aria-label="Vähem" (click)="changeQuantity(-1)">−</button>
+                    <span>{{ quantity }}</span>
+                    <button type="button" aria-label="Rohkem" (click)="changeQuantity(1)">+</button>
+                </div>
+                <span class="muted">= {{ fenceLength() }} aeda · {{ totalWeight() }} kg</span>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="total-row">
+                <span>Kokku</span>
+                <span class="total">{{ euro(total()) }}</span>
+            </div>
+            <a href="#paring" class="btn">Küsi pakkumist</a>
+            <span class="muted small">{{ stockText() }}</span>
+        </div>
+    </div>
 </section>
+}

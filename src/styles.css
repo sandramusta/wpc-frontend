@@ -3,6 +3,9 @@
   --wpc-tume: #323F44;
   --wpc-hele: #EFEFEF;
   --wpc-hall: #A6A6A6;
+  --wpc-pind: #F6F6F6;
+  --wpc-joon: #E4E4E4;
+  --wpc-tekst-hall: #5E6A6F;
 }
 
 body {
@@ -10,24 +13,31 @@ body {
   font-family: 'Roboto', sans-serif;
   color: var(--wpc-tume);
   background: #ffffff;
+  line-height: 1.5;
 }
 
 h1,
 h2,
 h3 {
-  font-weight: 500;
+  font-weight: 900;
+  letter-spacing: -0.5px;
 }
 
 button,
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  box-sizing: border-box;
   background: var(--wpc-roosa);
   color: #ffffff;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
+  border-radius: 999px;
+  padding: 12px 24px;
   font-family: inherit;
   font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   text-decoration: none;
 }
@@ -37,10 +47,16 @@ button:hover,
   opacity: 0.9;
 }
 
+.btn-outline {
+  background: #ffffff;
+  color: var(--wpc-tume);
+  border: 1px solid var(--wpc-tume);
+}
+
 .footer {
   background: var(--wpc-tume);
   color: var(--wpc-hall);
   text-align: center;
-  padding: 24px 16px;
-  margin-top: 48px;
+  padding: 32px 16px;
+  margin-top: 64px;
 }
