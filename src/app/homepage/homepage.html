@@ -1,0 +1,12 @@
+<section class="hero">
+    <h1>Hooldusvaba privaatsus sinu paneelaiale</h1>
+    <p>WPC aialipid 3D paneelaedadele. Viis kõrgust, kaks värvi.</p>
+</section>
+
+<section class="content">
+    @for (product of products; track product.id) {
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.description }}</p>
+    <p>Variante: {{ product.variants.length }}</p>
+    }
+</section>

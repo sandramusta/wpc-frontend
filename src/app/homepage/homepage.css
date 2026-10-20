@@ -1,0 +1,16 @@
+.hero {
+    background: var(--wpc-hele);
+    padding: 64px 24px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    margin: 0 0 12px;
+}
+
+.content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
