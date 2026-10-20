@@ -1,37 +1,100 @@
+.topbar {
+  background: var(--wpc-tume);
+  color: var(--wpc-roosa);
+  text-align: center;
+  font-size: 18px;
+  padding: 14px 16px;
+}
+
+/* Päis on läbipaistev ja asub lehe ülaosa pildi peal */
 .header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: transparent;
+}
+
+/* Sama laius nagu lehe sisul, et kõik algaks samast joonest */
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 24px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding: 16px 24px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--wpc-joon);
+  gap: 16px 40px;
 }
 
 .logo img {
-  height: 48px;
+  height: 120px;
   width: auto;
   display: block;
 }
 
 nav {
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 24px;
-  font-weight: 500;
+  justify-content: center;
+  gap: 8px 48px;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 nav a {
-  color: var(--wpc-tume);
+  color: #ffffff;
   text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
+nav a:hover,
 nav a.active {
   color: var(--wpc-roosa);
 }
 
-nav a.btn {
+.header .btn {
+  padding: 20px 48px;
+  font-size: 19px;
+  text-transform: uppercase;
+}
+
+.cart-link {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #ffffff;
+}
+
+.cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--wpc-roosa);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-link svg {
+  width: 30px;
+  height: 30px;
+}
+
+.cart-count {
+  min-width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  font-size: 14px;
 }

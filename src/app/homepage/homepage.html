@@ -3,20 +3,24 @@
         <h1>Hooldusvaba privaatsus sinu hoovis</h1>
         <p>WPC aialipid paigaldad olemasolevale 3D paneelaiale. Naabrid ei näe enam otse hoovi ja värvima ei pea kunagi.
         </p>
-        <a href="#toode" class="btn">Vali kõrgus ja värv</a>
     </div>
 </section>
 
 @if (product) {
 <section id="toode" class="container product">
-    <div class="picture">
-        <div class="slats">
-            @for (s of slats; track $index) {
-            <div class="slat" [style.height.px]="slatHeight()" [style.background]="colorHex[selectedColor]"></div>
-            }
+        <div class="gallery">
+            <img class="main-image" [src]="mainImage()" [alt]="product.name + ', ' + selectedColor">
+            <div class="thumbs">
+                <button type="button" class="thumb" [class.selected]="activeImage === null" (click)="activeImage = null">
+                    <img [src]="colorImage[selectedColor]" alt="Valitud värv">
+                </button>
+                @for (img of gallery; track img) {
+                <button type="button" class="thumb" [class.selected]="img === activeImage" (click)="activeImage = img">
+                    <img [src]="img" alt="Tootepilt">
+                </button>
+                }
+            </div>
         </div>
-        <span class="picture-label">{{ selectedColor }}, {{ heightLabel(selectedHeight) }}</span>
-    </div>
 
     <div class="info">
         <span class="badge">Testitud Tallinna Tehnikaülikoolis</span>
@@ -65,9 +69,61 @@
                 <span>Kokku</span>
                 <span class="total">{{ euro(total()) }}</span>
             </div>
-            <a href="#paring" class="btn">Küsi pakkumist</a>
+                    <button type="button" (click)="addToCart()">Lisa ostukorvi</button>
+                    @if (addedMessage) {
+                    <span class="added">{{ addedMessage }}</span>
+                    }
             <span class="muted small">{{ stockText() }}</span>
         </div>
+    </div>
+</section>
+<section id="paring" class="inquiry">
+    <div class="container inquiry-inner">
+        <div class="inquiry-text">
+            <h2>Küsi pakkumist</h2>
+            <p>Vastame tavaliselt sama päeva jooksul. Pakkumine on tasuta ega kohusta sind millekski.</p>
+            @if (selectedVariant()) {
+            <div class="choice">
+                Sinu valik: <strong>{{ heightLabel(selectedHeight) }}, {{ selectedColor }}, {{ quantity }}
+                    paneeli</strong>
+                <br>Hind kokku {{ euro(total()) }}
+            </div>
+            }
+        </div>
+
+        @if (sent) {
+        <div class="inquiry-form thanks">
+            <h3>Aitäh, {{ firstName }}!</h3>
+            <p>Päring on kohal. Võtame sinuga peagi ühendust.</p>
+        </div>
+        } @else {
+        <form class="inquiry-form" (ngSubmit)="submitInquiry()">
+            <div class="row">
+                <label>Eesnimi *
+                    <input type="text" name="firstName" [(ngModel)]="firstName" required>
+                </label>
+                <label>Perenimi
+                    <input type="text" name="lastName" [(ngModel)]="lastName">
+                </label>
+            </div>
+            <div class="row">
+                <label>E-post *
+                    <input type="email" name="email" [(ngModel)]="email" required>
+                </label>
+                <label>Telefon
+                    <input type="tel" name="phone" [(ngModel)]="phone">
+                </label>
+            </div>
+            <label>Sõnum
+                <textarea name="message" rows="4" [(ngModel)]="message"
+                    placeholder="Nt aia pikkus, kas soovid ka paigaldust"></textarea>
+            </label>
+            @if (error) {
+            <p class="error">{{ error }}</p>
+            }
+            <button type="submit" [disabled]="sending">{{ sending ? 'Saadan…' : 'Saada päring' }}</button>
+        </form>
+        }
     </div>
 </section>
 }
