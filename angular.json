@@ -52,9 +52,13 @@
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
+                "serve": {
+                  "builder": "@angular/build:dev-server",
+                            "options": {
+                              "allowedHosts": ["lvh.me"],
+                              "host": "127.0.0.1"
+                            },
+                  "configurations": {
             "production": {
               "buildTarget": "veebipood-frontend:build:production"
             },

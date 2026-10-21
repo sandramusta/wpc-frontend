@@ -1,0 +1,17 @@
+<section class="page-hero">
+  <h1>Korduma kippuvad küsimused</h1>
+  <p>Kõige sagedasemad küsimused WPC aialippide kohta.</p>
+</section>
+
+<section class="container">
+  @for (q of kysimused; track q.k) {
+    <details class="faq">
+      <summary>{{ q.k }}</summary>
+      <p>{{ q.v }}</p>
+    </details>
+  }
+  <div class="ask">
+    <h2>Ei leidnud vastust?</h2>
+    <a routerLink="/e-pood" fragment="paring" class="btn">Küsi meilt</a>
+  </div>
+</section>

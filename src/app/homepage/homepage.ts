@@ -4,31 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { Product } from '../models/Product';
 import { ProductVariant } from '../models/ProductVariant';
 import { CartService } from '../services/cart';
+import { PaigaldusVideo } from '../paigaldus-video/paigaldus-video';
 
 @Component({
   selector: 'app-homepage',
-  imports: [FormsModule],
+  imports: [FormsModule, PaigaldusVideo],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })
 export class Homepage {
   product: Product | null = null;
-  selectedHeight = 1530; // kõige populaarsem kõrgus on vaikimisi valitud
+  selectedHeight = 1530;
   selectedColor = 'tumehall';
   quantity = 8;
   colorHex: { [color: string]: string } = { tumehall: '#3E4448', pruun: '#6E5442' };
-
-  // Suur pilt vahetub värvi järgi
-  colorImage: { [color: string]: string } = {
-    tumehall: 'pildid/tumehall.jpg',
-    pruun: 'pildid/pruun.jpg'
-  };
+  colorImage: { [color: string]: string } = { tumehall: 'pildid/tumehall.jpg', pruun: 'pildid/pruun.jpg' };
   gallery = ['pildid/lahedalt.jpg', 'pildid/punutud.jpg', 'pildid/enne-parast.jpg', 'pildid/kaks-varvi.jpg'];
-  activeImage: string | null = null; // null = näitame valitud värvi pilti
-
+  activeImage: string | null = null;
   addedMessage = '';
-
-  // Päringuvormi väljad
   firstName = '';
   lastName = '';
   email = '';
@@ -51,7 +44,6 @@ export class Homepage {
     });
   }
 
-  // Kui klient tuli reklaamilingiga (nt ?utm_source=meta), jätame allika meelde.
   rememberSource() {
     const source = new URLSearchParams(window.location.search).get('utm_source');
     if (source) {
@@ -59,65 +51,31 @@ export class Homepage {
     }
   }
 
-  // Kõik erinevad kõrgused variantidest, väiksemast suuremani
   heights(): number[] {
     if (!this.product) return [];
     const all = this.product.variants.map(v => v.lengthMm);
     return [...new Set(all)].sort((a, b) => a - b);
   }
 
-  // Variant, mis vastab valitud kõrgusele ja värvile
   selectedVariant(): ProductVariant | undefined {
     return this.product?.variants.find(v => v.lengthMm === this.selectedHeight && v.color === this.selectedColor);
   }
 
-  selectHeight(height: number) {
-    this.selectedHeight = height;
-    this.addedMessage = '';
-  }
-
-  selectColor(color: string) {
-    this.selectedColor = color;
-    this.activeImage = null; // värvi vahetamisel näitame selle värvi pilti
-    this.addedMessage = '';
-  }
-
-  mainImage(): string {
-    return this.activeImage ?? this.colorImage[this.selectedColor];
-  }
-
-  changeQuantity(change: number) {
-    this.quantity = Math.max(1, this.quantity + change);
-  }
+  selectHeight(height: number) { this.selectedHeight = height; this.addedMessage = ''; }
+  selectColor(color: string) { this.selectedColor = color; this.activeImage = null; this.addedMessage = ''; }
+  mainImage(): string { return this.activeImage ?? this.colorImage[this.selectedColor]; }
+  changeQuantity(change: number) { this.quantity = Math.max(1, this.quantity + change); }
 
   addToCart() {
     const variant = this.selectedVariant();
     if (!variant || !this.product) return;
-    this.cart.add({
-      variantId: variant.id,
-      name: this.product.name,
-      heightMm: variant.lengthMm,
-      color: variant.color,
-      price: variant.price,
-      quantity: this.quantity
-    });
+    this.cart.add({ variantId: variant.id, name: this.product.name, heightMm: variant.lengthMm, color: variant.color, price: variant.price, quantity: this.quantity });
     this.addedMessage = 'Lisatud ostukorvi: ' + this.quantity + ' komplekti, ' + this.heightLabel(variant.lengthMm) + ', ' + variant.color;
   }
 
-  total(): number {
-    const variant = this.selectedVariant();
-    return variant ? variant.price * this.quantity : 0;
-  }
-
-  totalWeight(): number {
-    const variant = this.selectedVariant();
-    return variant ? Math.round(variant.weightKg * this.quantity) : 0;
-  }
-
-  // 1 komplekt = 1 paneel = 2,5 m aeda
-  fenceLength(): string {
-    return (this.quantity * 2.5).toString().replace('.', ',') + ' m';
-  }
+  total(): number { const v = this.selectedVariant(); return v ? v.price * this.quantity : 0; }
+  totalWeight(): number { const v = this.selectedVariant(); return v ? Math.round(v.weightKg * this.quantity) : 0; }
+  fenceLength(): string { return (this.quantity * 2.5).toString().replace('.', ',') + ' m'; }
 
   stockText(): string {
     const variant = this.selectedVariant();
@@ -127,49 +85,24 @@ export class Homepage {
     return 'Ootab kaupa, tarneaeg kuni paar kuud';
   }
 
-  heightLabel(mm: number): string {
-    return (mm / 1000).toFixed(2).replace('.', ',') + ' m';
-  }
-
-  euro(amount: number): string {
-    return amount.toFixed(2).replace('.', ',') + ' €';
-  }
+  heightLabel(mm: number): string { return (mm / 1000).toFixed(2).replace('.', ',') + ' m'; }
+  euro(amount: number): string { return amount.toFixed(2).replace('.', ',') + ' €'; }
 
   submitInquiry() {
     const variant = this.selectedVariant();
-    if (!this.firstName || !this.email) {
-      this.error = 'Palun kirjuta oma nimi ja e-post.';
-      return;
-    }
-    if (!variant) {
-      this.error = 'Vali kõrgus ja värv.';
-      return;
-    }
-
+    if (!this.firstName || !this.email) { this.error = 'Palun kirjuta oma nimi ja e-post.'; return; }
+    if (!variant) { this.error = 'Vali kõrgus ja värv.'; return; }
     const inquiry = {
       orderType: 'INQUIRY',
       source: sessionStorage.getItem('source') ?? 'otse',
-      message: this.message,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      phone: this.phone,
+      message: this.message, firstName: this.firstName, lastName: this.lastName, email: this.email, phone: this.phone,
       items: [{ variantId: variant.id, quantity: this.quantity }]
     };
-
     this.sending = true;
     this.error = '';
     this.http.post(this.apiUrl + "/orders", inquiry).subscribe({
-      next: () => {
-        this.sending = false;
-        this.sent = true;
-        this.detectChange.detectChanges();
-      },
-      error: () => {
-        this.sending = false;
-        this.error = 'Päringu saatmine ei õnnestunud. Proovi uuesti või kirjuta info@wpc.ee.';
-        this.detectChange.detectChanges();
-      }
+      next: () => { this.sending = false; this.sent = true; this.detectChange.detectChanges(); },
+      error: () => { this.sending = false; this.error = 'Päringu saatmine ei õnnestunud. Proovi uuesti või kirjuta info@wpc.ee.'; this.detectChange.detectChanges(); }
     });
   }
 }

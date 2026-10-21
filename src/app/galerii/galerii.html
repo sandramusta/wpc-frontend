@@ -1,0 +1,20 @@
+<section class="page-hero">
+  <h1>Galerii</h1>
+  <p>Soovid paremat ettekujutust, milline näeb välja 3D paneelaed WPC aialippidega? Siis oled õiges kohas.</p>
+</section>
+
+<section class="container grid">
+  @for (p of pildid; track p.src) {
+    <button type="button" class="item" (click)="avatud.set(p)">
+      <img [src]="p.src" [alt]="p.tekst">
+      <span class="caption">{{ p.tekst }}</span>
+    </button>
+  }
+</section>
+
+@if (avatud(); as pilt) {
+  <div class="lightbox" (click)="avatud.set(null)">
+    <img [src]="pilt.src" [alt]="pilt.tekst">
+    <button type="button" class="close" aria-label="Sulge">✕</button>
+  </div>
+}

@@ -1,0 +1,19 @@
+.container { max-width: 1400px; margin: 0 auto; padding: 64px 24px 96px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.item {
+  position: relative; display: block; padding: 0; border-radius: 20px; overflow: hidden;
+  aspect-ratio: 4 / 5; background: var(--wpc-pind);
+}
+.item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.item:hover img { transform: scale(1.06); }
+.caption {
+  position: absolute; left: 12px; bottom: 12px;
+  background: rgba(255, 255, 255, 0.92); color: var(--wpc-tume);
+  border-radius: 10px; padding: 6px 12px; font-size: 14px; font-weight: 500;
+}
+.lightbox {
+  position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, 0.85);
+  display: flex; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out;
+}
+.lightbox img { max-width: 100%; max-height: 90vh; border-radius: 16px; }
+.close { position: absolute; top: 20px; right: 20px; width: 52px; padding: 0; font-size: 22px; }

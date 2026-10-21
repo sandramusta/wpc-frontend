@@ -32,13 +32,14 @@
   display: block;
 }
 
+/* Menüü võtab logo ja nupu vahelise ruumi ning on selle keskel */
 nav {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px 48px;
-  font-size: 24px;
+  gap: 8px 28px;
+  font-size: 20px;
   font-weight: 700;
 }
 

@@ -1,0 +1,92 @@
+<section class="page-hero">
+  <h1>Juhendid</h1>
+  <p>Mida enne ostmist kontrollida ja kuidas lipid ise paigaldada.</p>
+  <div class="jump">
+    <a routerLink="/juhendid" fragment="ostujuhend" class="btn">Ostujuhend</a>
+    <a routerLink="/juhendid" fragment="paigaldusjuhend" class="btn btn-glass">Paigaldusjuhend</a>
+  </div>
+</section>
+
+<!-- OSTUJUHEND -->
+<section id="ostujuhend" class="container block">
+  <span class="eyebrow">Ostujuhend</span>
+  <h2>Mida silmas pidada enne ostmist</h2>
+  <div class="check-grid">
+    @for (o of ostujuhend; track o.title; let i = $index) {
+      <div class="check-card">
+        <span class="check-num">{{ i + 1 }}</span>
+        <h3>{{ o.title }}</h3>
+        <p>{{ o.text }}</p>
+      </div>
+    }
+  </div>
+  <div class="ok-box">
+    <div>
+      <h3>Kõik sobib?</h3>
+      <p>Vali kõrgus ja värv ning näed kohe hinda.</p>
+    </div>
+    <a routerLink="/e-pood" class="btn btn-big">Vaata e-poodi</a>
+  </div>
+</section>
+
+<!-- PAIGALDUSJUHEND -->
+<section id="paigaldusjuhend" class="install">
+  <div class="container">
+    <span class="eyebrow">Paigaldusjuhend</span>
+    <h2>Paigalda ise, eritööriistu pole vaja</h2>
+
+    <div class="intro">
+      <div class="intro-text">
+        <p>Paigaldamine on lihtne ega nõua erilisi tööriistu ega ettevalmistust. Vaata videot või loe allpool samm-sammult juhendit.</p>
+        <div class="facts">
+          <div><strong>30–45 min</strong><span>paneeli kohta</span></div>
+          <div><strong>0</strong><span>eritööriista</span></div>
+          <div><strong>1 cm</strong><span>vaba ruumi maapinnast</span></div>
+        </div>
+      </div>
+      <div class="intro-video">
+        <app-paigaldus-video />
+      </div>
+    </div>
+
+    <div class="kit">
+      <h3>Igas komplektis</h3>
+      <img src="pildid/juhend/komplekt.jpg" alt="Komplekti sisu: 50 WPC lippi, 4–6 PVC V-profiili, 2 alumist ja 2 ülemist PVC profiili">
+    </div>
+
+    <ol class="steps">
+      @for (s of sammud; track s.title; let i = $index) {
+        <li class="step" [class.no-image]="s.pildid.length === 0">
+          <div class="step-text">
+            <span class="step-number">{{ i + 1 }}</span>
+            <h3>{{ s.title }}</h3>
+            <ul>
+              @for (p of s.punktid; track p) {
+                <li>{{ p }}</li>
+              }
+            </ul>
+          </div>
+          @if (s.pildid.length > 0) {
+            <div class="step-images">
+              @for (img of s.pildid; track img) {
+                <img [src]="img" [alt]="s.title">
+              }
+            </div>
+          }
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="container tips">
+  <div class="tip">
+    <h3>Hooldus</h3>
+    <p>WPC on hooldusvaba. Aeg-ajalt võid pinda puhastada survepesuriga (mitte väga lähedalt) või seebiveega.</p>
+  </div>
+  <div class="tip">
+    <h3>Pole aega ise paigaldada?</h3>
+    <p>Pakume ka paigaldusteenust, tavaliselt või punutud stiilis.</p>
+    <a routerLink="/" fragment="paigaldaja" class="btn">Leia paigaldaja</a>
+  </div>
+</section>

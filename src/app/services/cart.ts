@@ -25,6 +25,11 @@ export class CartService {
         this.save(updated);
     }
 
+    // Kogus ostukorvi lehel: vähemalt 1
+    setQuantity(variantId: number, quantity: number) {
+        this.save(this.items().map(item => item.variantId === variantId ? { ...item, quantity: Math.max(1, quantity) } : item));
+    }
+
     remove(variantId: number) {
         this.save(this.items().filter(item => item.variantId !== variantId));
     }
