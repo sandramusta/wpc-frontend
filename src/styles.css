@@ -6,6 +6,16 @@
   --wpc-pind: #F6F6F6;
   --wpc-joon: #E4E4E4;
   --wpc-tekst-hall: #5E6A6F;
+
+  /* Kirjasuurused kogu lehel. Muuda siin ja muutub igal pool.
+     clamp(väikseim, sobiv, suurim): pealkiri läheb kitsamal ekraanil ise väiksemaks. */
+  --fs-small: 14px;   /* sildid, märkused */
+  --fs-body: 16px;    /* tavaline tekst */
+  --fs-lead: 18px;    /* sissejuhatav lõik pealkirja all */
+  --fs-h3: 20px;      /* kasti või kaardi pealkiri */
+  --fs-h2: clamp(26px, 2vw + 16px, 34px);   /* sektsiooni pealkiri */
+  --fs-h1: clamp(34px, 3vw + 22px, 48px);   /* lehe pealkiri pildi peal */
+  --fs-number: clamp(28px, 2vw + 18px, 36px); /* suured numbrid, nt -10% või 30 min */
 }
 
 body {
@@ -13,7 +23,8 @@ body {
   font-family: 'Roboto', sans-serif;
   color: var(--wpc-tume);
   background: #ffffff;
-  line-height: 1.5;
+  font-size: var(--fs-body);
+  line-height: 1.6;
 }
 
 h1, h2, h3 {
@@ -95,18 +106,18 @@ button:hover, .btn:hover {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 18px;
+  font-size: var(--fs-body);
 }
 
 .footer-menu a {
   text-transform: uppercase;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.5px;
 }
 
 .footer-title {
-  font-size: 20px;
+  font-size: var(--fs-lead);
 }
 
 .footer-social {
@@ -134,16 +145,39 @@ button:hover, .btn:hover {
 .page-hero {
   color: #ffffff;
   text-align: center;
-  padding: 230px 24px 100px;
+  padding: 200px 24px 80px;
 }
 
 .page-hero h1 {
-  font-size: 56px;
+  font-size: var(--fs-h1);
   margin: 0 0 12px;
 }
 
 .page-hero p {
-  font-size: 20px;
+  font-size: var(--fs-lead);
   max-width: 640px;
   margin: 0 auto;
+}
+
+/* Mobiilis on päis pildi kohal (vt menu.css), seega pole pildi ülaosas vaja nii palju ruumi */
+@media (max-width: 760px) {
+  .page-hero { padding: 48px 16px; }
+  /* Jalus: menüü kahes tulbas, vähem tühja ruumi */
+  .footer-inner { padding: 40px 16px; gap: 32px; }
+  .footer-brand { gap: 20px; }
+  .footer-logo { height: 56px; }
+  .footer-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+  .footer-menu a { font-size: 14px; }
+}
+
+/* Printimisel (nt hinnapakkumine) prinditakse ainult .print-area osa */
+@page { size: A4; margin: 15mm; }
+
+@media print {
+  /* Lehe ülejäänud sisu on peidus, aga võtaks muidu ikka ruumi ja tekitaks tühje lehekülgi */
+  html, body { height: 100%; overflow: hidden; }
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; left: 0; top: 0; width: 100%; }
+  .no-print { display: none !important; }
 }

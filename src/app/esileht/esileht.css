@@ -1,10 +1,10 @@
 .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
-.section { padding-top: 96px; padding-bottom: 32px; }
-.section h2, .installers h2, .ba-text h2, .esto-text h2 { font-size: 44px; line-height: 1.1; margin: 8px 0 32px; }
+.section { padding-top: 72px; padding-bottom: 32px; }
+.section h2, .installers h2, .ba-text h2, .esto-text h2 { font-size: var(--fs-h2); line-height: 1.1; margin: 8px 0 32px; }
 
 .eyebrow {
   display: inline-block;
-  font-size: 15px;
+  font-size: var(--fs-small);
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -12,7 +12,7 @@
 }
 .eyebrow.pink { color: var(--wpc-roosa); }
 
-.btn-big { padding: 18px 34px; font-size: 18px; }
+.btn-big { padding: 16px 30px; font-size: 17px; }
 .btn-glass {
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.7);
@@ -24,13 +24,13 @@
 /* 1. Avapilt */
 .hero {
   color: #ffffff;
-  padding: 230px 0 120px;
+  padding: 200px 0 96px;
   overflow: hidden;
 }
 .hero-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 48px; }
 .hero-text { flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px; }
-.hero h1 { font-size: 68px; line-height: 1.05; margin: 0; }
-.hero p { font-size: 21px; max-width: 560px; margin: 0; }
+.hero h1 { font-size: var(--fs-h1); line-height: 1.05; margin: 0; }
+.hero p { font-size: var(--fs-lead); max-width: 560px; margin: 0; }
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 14px; }
 
 /* Ujuvad kastid: hõljuvad aeglaselt üles-alla */
@@ -46,7 +46,7 @@
   flex-direction: column;
   animation: hover-float 5s ease-in-out infinite;
 }
-.float-card strong { font-size: 30px; font-weight: 900; color: var(--wpc-roosa); }
+.float-card strong { font-size: 26px; font-weight: 900; color: var(--wpc-roosa); }
 .float-card.c2 { margin-right: 60px; animation-delay: 1.5s; }
 @keyframes hover-float {
   0%, 100% { transform: translateY(0); }
@@ -54,7 +54,7 @@
 }
 
 /* 3. Enne ja pärast */
-.before-after { background: var(--wpc-tume); color: #ffffff; padding: 96px 0; }
+.before-after { background: var(--wpc-tume); color: #ffffff; padding: 72px 0; }
 .ba-inner { display: flex; flex-wrap: wrap; gap: 56px; align-items: center; }
 .ba-img { flex: 1 1 380px; min-width: 0; max-width: 520px; width: 100%; border-radius: 24px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); }
 .ba-text { flex: 1 1 420px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
@@ -65,20 +65,20 @@
 .esto-link { flex: 2 1 520px; min-width: 0; }
 .esto-banner { width: 100%; display: block; border-radius: 20px; }
 .esto-text { flex: 1 1 300px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
-.esto-text h2 { margin: 0; font-size: 34px; }
-.esto-text p { margin: 0; font-size: 18px; color: var(--wpc-tekst-hall); }
+.esto-text h2 { margin: 0; font-size: var(--fs-h2); }
+.esto-text p { margin: 0; font-size: var(--fs-body); color: var(--wpc-tekst-hall); }
 
 /* Leia paigaldaja: tume taust, vasakul otsing, paremal tulemused */
 .installers { background: var(--wpc-tume); color: #ffffff; padding: 104px 0; }
 .installers-inner { display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start; }
 .installers-text { flex: 1 1 460px; }
 .installers h2 { margin-bottom: 12px; }
-.lead { font-size: 19px; color: #D6D9DA; margin: 0 0 28px; max-width: 560px; }
+.lead { font-size: var(--fs-lead); color: #D6D9DA; margin: 0 0 28px; max-width: 560px; }
 .finder { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
 .finder-select { display: flex; flex-direction: column; gap: 6px; font-weight: 700; }
 .finder-select select {
   min-width: 260px; min-height: 56px; padding: 0 16px;
-  font-family: inherit; font-size: 17px;
+  font-family: inherit; font-size: 16px;
   border: none; border-radius: 14px; background: #ffffff; color: var(--wpc-tume);
 }
 .btn-location {
@@ -99,7 +99,7 @@
   display: flex; flex-direction: column; gap: 6px; border: 3px solid transparent;
 }
 .installer.nearest { border-color: var(--wpc-roosa); box-shadow: 0 20px 50px rgba(237, 19, 112, 0.35); }
-.installer h3 { margin: 0; font-size: 22px; }
+.installer h3 { margin: 0; font-size: var(--fs-h3); }
 .nearest-badge {
   position: absolute; top: -14px; left: 24px;
   background: var(--wpc-roosa); color: #ffffff;
@@ -121,14 +121,14 @@
 .logo-card img { max-width: 100%; height: 48px; object-fit: contain; filter: grayscale(1); opacity: 0.75; transition: filter 0.25s, opacity 0.25s; }
 .logo-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(50, 63, 68, 0.15); border-color: transparent; }
 .logo-card:hover img { filter: none; opacity: 1; }
-.logo-text { font-weight: 900; font-size: 22px; }
+.logo-text { font-weight: 900; font-size: 20px; }
 .logo-city { font-size: 14px; color: var(--wpc-tekst-hall); }
 .logo-join { background: var(--wpc-pind); border-style: dashed; font-weight: 700; color: var(--wpc-roosa); }
 .join-plus { font-size: 40px; line-height: 1; }
 
 /* 7. Galerii */
 .section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
-.see-all { color: var(--wpc-roosa); font-weight: 700; text-decoration: none; font-size: 18px; margin-bottom: 32px; }
+.see-all { color: var(--wpc-roosa); font-weight: 700; text-decoration: none; font-size: var(--fs-body); margin-bottom: 32px; }
 .gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .gallery-item { display: block; border-radius: 20px; overflow: hidden; aspect-ratio: 4 / 5; }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
@@ -137,15 +137,13 @@
 /* 8. Lõpu üleskutse */
 .cta { background: var(--wpc-roosa); color: #ffffff; margin-top: 96px; padding: 80px 0; }
 .cta-inner { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between; }
-.cta h2 { font-size: 44px; line-height: 1.1; margin: 0; flex: 1 1 520px; }
+.cta h2 { font-size: var(--fs-h2); line-height: 1.1; margin: 0; flex: 1 1 520px; }
 
 @media (max-width: 1000px) {
   .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 700px) {
-  .hero h1 { font-size: 44px; }
-  .section h2, .installers h2, .ba-text h2, .cta h2 { font-size: 34px; }
   .float-cards { align-items: stretch; }
   .float-card.c2 { margin-right: 0; }
 }
@@ -155,14 +153,14 @@
 .checks-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; }
 .check { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1 1 160px; text-align: center; }
 .check-icon { color: var(--wpc-roosa); }
-.check span { font-size: 20px; font-weight: 900; color: #8A9499; line-height: 1.15; }
+.check span { font-size: var(--fs-lead); font-weight: 900; color: #8A9499; line-height: 1.15; }
 
 /* 3. Miks valida */
 .why { padding: 112px 0; background: linear-gradient(180deg, #ffffff, var(--wpc-pind)); }
 .why-inner { display: grid; grid-template-columns: 1fr 380px 1.2fr; gap: 0 48px; align-items: center; }
 .why-title { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; align-self: start; }
-.why-title h2 { font-size: 52px; margin: 0; }
-.why-title p { font-size: 18px; margin: 0; }
+.why-title h2 { font-size: var(--fs-h2); margin: 0; }
+.why-title p { font-size: var(--fs-body); margin: 0; }
 .why-image img {
   width: 100%; height: 640px; object-fit: cover; display: block;
   border-radius: 40px; box-shadow: 0 40px 80px rgba(50, 63, 68, 0.3);
@@ -179,22 +177,22 @@
 }
 .why-item:nth-child(2) .why-number { animation-delay: 1.2s; }
 .why-item:nth-child(3) .why-number { animation-delay: 2.4s; }
-.why-item h3 { font-size: 28px; line-height: 1.15; margin: 0 0 8px; }
-.why-item p { margin: 0; font-size: 17px; color: var(--wpc-tekst-hall); }
+.why-item h3 { font-size: var(--fs-h3); line-height: 1.15; margin: 0 0 8px; }
+.why-item p { margin: 0; font-size: var(--fs-body); color: var(--wpc-tekst-hall); }
 
 /* 4. Kas kõlab tuttavalt + materjal */
-.pains-section { background: linear-gradient(180deg, #D0D3DA, #F8C6DB); padding: 96px 0; }
+.pains-section { background: linear-gradient(180deg, #D0D3DA, #F8C6DB); padding: 72px 0; }
 .pains-inner { display: flex; flex-wrap: wrap; gap: 64px; }
 .pains-col { flex: 1 1 420px; }
-.pains-col h2 { font-size: 40px; margin: 0 0 32px; }
+.pains-col h2 { font-size: var(--fs-h2); margin: 0 0 32px; }
 .pains { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 22px; }
-.pains li { display: flex; align-items: center; gap: 20px; font-size: 24px; }
+.pains li { display: flex; align-items: center; gap: 20px; font-size: var(--fs-lead); }
 .pains svg { flex: none; color: var(--wpc-roosa); }
 .material { display: flex; flex-direction: column; gap: 28px; }
 .material-row { display: flex; flex-direction: column; gap: 8px; }
 .material-head { display: flex; align-items: baseline; gap: 12px; }
-.material-pct { font-size: 40px; font-weight: 900; color: var(--wpc-roosa); line-height: 1; }
-.material-name { font-size: 24px; }
+.material-pct { font-size: var(--fs-number); font-weight: 900; color: var(--wpc-roosa); line-height: 1; }
+.material-name { font-size: var(--fs-lead); }
 .bar { height: 10px; background: rgba(255, 255, 255, 0.7); border-radius: 5px; overflow: hidden; }
 .bar-fill { height: 100%; background: var(--wpc-roosa); border-radius: 5px; }
 
@@ -207,8 +205,8 @@
 /* TTÜ katsetulemused */
 .lab { background: radial-gradient(circle at 20% 0%, #4A5A61, var(--wpc-tume) 60%); color: #ffffff; padding: 104px 0; }
 .lab-head { text-align: center; max-width: 760px; margin: 0 auto 56px; }
-.lab-head h2 { font-size: 48px; line-height: 1.1; margin: 8px 0 16px; }
-.lab-head p { font-size: 19px; color: #D6D9DA; margin: 0; }
+.lab-head h2 { font-size: var(--fs-h2); line-height: 1.1; margin: 8px 0 16px; }
+.lab-head p { font-size: var(--fs-lead); color: #D6D9DA; margin: 0; }
 .pink { color: var(--wpc-roosa); }
 .lab-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .lab-card {
@@ -217,13 +215,13 @@
   transition: transform 0.25s, background 0.25s;
 }
 .lab-card:hover { transform: translateY(-6px); background: rgba(255, 255, 255, 0.1); }
-.lab-big { display: block; font-size: 52px; font-weight: 900; color: var(--wpc-roosa); line-height: 1; white-space: nowrap; }
-.lab-card h3 { font-size: 24px; margin: 18px 0 8px; }
+.lab-big { display: block; font-size: var(--fs-number); font-weight: 900; color: var(--wpc-roosa); line-height: 1; white-space: nowrap; }
+.lab-card h3 { font-size: var(--fs-h3); margin: 18px 0 8px; }
 .lab-card p { margin: 0; color: #D6D9DA; }
 .lab-all { margin-top: 40px; text-align: center; }
 .lab-all summary {
   display: inline-block; cursor: pointer; list-style: none;
-  font-weight: 700; font-size: 18px; color: #ffffff;
+  font-weight: 700; font-size: var(--fs-body); color: #ffffff;
   border-bottom: 2px solid var(--wpc-roosa); padding-bottom: 4px;
 }
 .lab-all summary::-webkit-details-marker { display: none; }
@@ -238,4 +236,22 @@
 @media (max-width: 1000px) {
   .lab-cards { grid-template-columns: 1fr; }
   .lab-all table { display: block; overflow-x: auto; }
+}
+
+/* Mobiilis on päis pildi kohal (vt menu.css), seega pildi ülaosas pole vaja nii palju ruumi */
+@media (max-width: 760px) {
+  .hero { padding: 40px 0 48px; }
+  /* Hõljuvad kastid kõrvuti ja väiksemad */
+  .float-cards { flex-direction: row; gap: 10px; }
+  .float-card { min-width: 0; flex: 1; padding: 12px 14px; animation: none; font-size: 13px; }
+  .float-card strong { font-size: 20px; }
+  /* Eelised kahes tulbas */
+  .checks { padding: 24px 0; }
+  .checks-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 8px; }
+  .check svg { width: 40px; height: 40px; }
+  .check span { font-size: 15px; }
+  /* Edasimüüjate logod kahes tulbas */
+  .logo-wall { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .logo-card { min-height: 110px; padding: 16px 10px; }
+  .logo-text { font-size: 16px; }
 }

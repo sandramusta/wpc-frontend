@@ -1,0 +1,40 @@
+<h2 class="section-title">Arved</h2>
+@if (invoices().length === 0) {
+  <p class="muted">Arveid veel ei ole. Arve saad teha projektist, kui klient on pakkumise kinnitanud.</p>
+} @else {
+  <div class="table-box">
+    <table>
+      <thead><tr><th>Arve nr</th><th>Kuupäev</th><th>Maksetähtaeg</th><th>Klient</th><th>Summa</th><th>Olek</th><th></th></tr></thead>
+      <tbody>
+        @for (inv of invoices(); track inv.id) {
+          <tr>
+            <td>{{ inv.number }}</td>
+            <td>{{ dateEt(inv.invoiceDate) }}</td>
+            <td>{{ dateEt(inv.dueDate) }}</td>
+            <td>{{ inv.project.clientName }}</td>
+            <td class="price">{{ euro(inv.grandTotal) }} €</td>
+            <td>
+              @if (inv.paid) {
+                <span class="state paid">Makstud</span>
+              } @else if (overdue(inv)) {
+                <span class="state late">Tähtaeg ületatud</span>
+              } @else {
+                <span class="state">Ootab makset</span>
+              }
+            </td>
+            <td class="actions">
+              <button type="button" class="ghost" (click)="open.set(inv)">Ava</button>
+              @if (!inv.paid) {
+                <button type="button" class="link" (click)="markPaid(inv)">Märgi makstuks</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (open(); as inv) {
+  <app-pakkumine [project]="inv.project" [partner]="partner()" [invoice]="inv" (close)="open.set(null)" />
+}

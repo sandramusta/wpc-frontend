@@ -1,0 +1,63 @@
+.container { max-width: 1200px; margin: 0 auto; padding: 64px 24px; }
+h2 { font-size: var(--fs-h2); margin: 0 0 16px; }
+h3 { font-size: var(--fs-h3); margin: 0 0 6px; }
+.container p { margin: 0; color: var(--wpc-tekst-hall); line-height: 1.6; }
+.center { text-align: center; }
+.lead { font-size: var(--fs-lead); max-width: 760px; margin: 0 auto 32px; }
+.center.lead { margin-bottom: 40px; }
+
+.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.btn-light { background: #ffffff; color: var(--wpc-tume); }
+
+/* Mida partner saab */
+.benefits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.benefit { background: var(--wpc-pind); border-radius: 24px; padding: 28px; }
+.big { display: block; font-size: var(--fs-number); font-weight: 900; color: var(--wpc-roosa); margin-bottom: 8px; }
+
+/* Hall taustariba */
+.band { background: var(--wpc-pind); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.split .lead { margin: 0 0 24px; }
+.photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 24px; }
+.reasons { display: flex; flex-direction: column; gap: 22px; }
+.reason { display: flex; gap: 16px; }
+.check {
+  flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--wpc-roosa); color: #ffffff;
+  display: flex; align-items: center; justify-content: center; font-weight: 900;
+}
+
+/* Partnerikonto */
+.features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-bottom: 40px; }
+.feature { border: 1px solid var(--wpc-joon); border-radius: 24px; padding: 24px; }
+.num { display: inline-block; font-weight: 900; color: var(--wpc-roosa); margin-bottom: 10px; }
+
+/* Kuidas alustada */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+.step { background: #ffffff; border-radius: 24px; padding: 28px; }
+.step-num {
+  display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%;
+  background: var(--wpc-tume); color: #ffffff; font-size: 20px; font-weight: 900; margin-bottom: 16px;
+}
+
+/* Vorm */
+.join { display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; background: var(--wpc-tume); color: #ffffff; border-radius: 32px; padding: 48px; }
+.container .join p { color: #D5DADC; }
+.join-text p + p { margin-top: 16px; }
+.contact a { color: #ffffff; font-weight: 700; }
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.wide { grid-column: 1 / -1; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 500; font-size: 14px; }
+input, textarea { font-family: inherit; font-size: 16px; padding: 10px 12px; border: none; border-radius: 10px; }
+.error { color: #FFB4C4; }
+.thanks { background: rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 32px; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+#liitu { scroll-margin-top: 24px; }
+
+@media (max-width: 1000px) {
+  .benefits, .features { grid-template-columns: 1fr 1fr; }
+  .split, .join, .steps { grid-template-columns: 1fr; }
+  .join { padding: 28px; }
+}
+@media (max-width: 560px) {
+  .benefits, .features, .form { grid-template-columns: 1fr; }
+}

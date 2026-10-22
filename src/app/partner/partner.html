@@ -1,0 +1,151 @@
+<section class="page-hero">
+  <h1>Partnerikonto</h1>
+  <p>Partnerhinnad, laoseis, tellimine ja tellimuste ajalugu ühes kohas.</p>
+</section>
+
+<section class="container page">
+  <div class="demo-bar">
+    <span class="demo-tag">Demo</span>
+    <span>Päris kontos logib partner sisse. Siin vali partner nimekirjast:</span>
+    <select (change)="selectPartner($any($event.target).value)" aria-label="Vali partner">
+      <option value="">Vali partner</option>
+      @for (p of partners(); track p.id) {
+        <option [value]="p.id">{{ p.company }} ({{ levelName(p.partnerLevel) }})</option>
+      }
+    </select>
+  </div>
+
+  @if (partner(); as p) {
+    <!-- Ülevaade: tase ja ostumaht -->
+    <div class="overview">
+      <div class="card welcome">
+        <span class="muted">Tere, {{ p.firstName }}!</span>
+        <h2>{{ p.company }}</h2>
+        <span class="level" [class.pro]="p.partnerLevel === 'PRO'">{{ levelName(p.partnerLevel) }} · −{{ p.discountPercent }}%</span>
+      </div>
+      <div class="card">
+        <span class="muted">Ostud viimase 12 kuu jooksul</span>
+        <strong class="big">{{ euro(yearTotal()) }}</strong>
+        @if (p.partnerLevel === 'PARTNER') {
+          <div class="bar"><div class="bar-fill" [style.width.%]="progressPercent()"></div></div>
+          <span class="muted small">Pro tasemeni (−15%): {{ euro(NEXT_LEVEL_AMOUNT) }} aastas</span>
+        } @else {
+          <span class="muted small">Sul on kõrgeim tase.</span>
+        }
+      </div>
+      <div class="card">
+        <span class="muted">Tarneaeg</span>
+        <strong class="big-small">Laos olev kaup kohe</strong>
+        <span class="muted small">Kui kaupa pole laos, võib tarneaeg olla kuni paar kuud.</span>
+      </div>
+    </div>
+
+    <nav class="tabs" aria-label="Partnerikonto osad">
+      <button type="button" [class.active]="tab() === 'projektid'" (click)="tab.set('projektid')">Projektid</button>
+      <button type="button" [class.active]="tab() === 'arved'" (click)="tab.set('arved')">Arved</button>
+      <button type="button" [class.active]="tab() === 'tellimine'" (click)="tab.set('tellimine')">Tootekataloog</button>
+      <button type="button" [class.active]="tab() === 'tellimused'" (click)="tab.set('tellimused')">Minu tellimused</button>
+      <button type="button" [class.active]="tab() === 'materjalid'" (click)="tab.set('materjalid')">Turundusmaterjalid</button>
+      <button type="button" [class.active]="tab() === 'andmed'" (click)="tab.set('andmed')">Ettevõtte andmed</button>
+    </nav>
+
+    @if (tab() === 'projektid') {
+      <app-projektid [partner]="p" [variants]="variants()" (ordered)="onProjectOrdered()" />
+    }
+
+    @if (tab() === 'arved') {
+      <app-arved [partner]="p" />
+    }
+
+    @if (tab() === 'andmed') {
+      <app-profiil [partner]="p" (saved)="onProfileSaved($event)" />
+    }
+
+    @if (tab() === 'tellimine') {
+    <!-- Tootekataloog -->
+    <h2 class="section-title">Tootekataloog</h2>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr><th>Toode</th><th>Kõrgus</th><th>Värv</th><th>Tavahind</th><th>Sinu hind</th><th>Laos</th><th>Kogus</th></tr>
+        </thead>
+        <tbody>
+          @for (v of variants(); track v.id) {
+            <tr>
+              <td>{{ product()?.name }}</td>
+              <td>{{ heightLabel(v.lengthMm) }}</td>
+              <td>{{ v.color }}</td>
+              <td class="old">{{ euro(v.price) }}</td>
+              <td class="price">{{ euro(partnerPrice(v.price)) }}</td>
+              <td>
+                @if (v.stock > 0) {
+                  <span class="stock ok">{{ v.stock }} tk</span>
+                } @else {
+                  @if (v.expectedDate) {
+                    <span class="stock no">Eeldatav tarneaeg {{ date(v.expectedDate) }}</span>
+                  } @else {
+                    <span class="stock no">Ootab kaupa</span>
+                  }
+                }
+              </td>
+              <td><input type="number" min="0" [name]="'q' + v.id" [(ngModel)]="quantities[v.id]" [attr.aria-label]="'Kogus ' + heightLabel(v.lengthMm) + ' ' + v.color"></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="order-bar">
+      <span>Tellimus kokku: <strong>{{ euro(orderTotal()) }}</strong></span>
+      <button type="button" [disabled]="sending()" (click)="submitOrder()">{{ sending() ? 'Saadan…' : 'Esita tellimus' }}</button>
+    </div>
+    @if (message()) { <p class="ok-msg">{{ message() }}</p> }
+    @if (error()) { <p class="error">{{ error() }}</p> }
+
+    }
+
+    @if (tab() === 'tellimused') {
+    <!-- Tellimuste ajalugu -->
+    <h2 class="section-title">Minu tellimused</h2>
+    @if (orders().length === 0) {
+      <p class="muted">Tellimusi veel ei ole.</p>
+    } @else {
+      <div class="table-box">
+        <table>
+          <thead><tr><th>Nr</th><th>Kuupäev</th><th>Tooted</th><th>Summa</th><th>Olek</th></tr></thead>
+          <tbody>
+            @for (o of orders(); track o.id) {
+              <tr>
+                <td>{{ o.id }}</td>
+                <td>{{ date(o.createdAt) }}</td>
+                <td>
+                  @for (i of o.items; track $index) {
+                    <div>{{ i.quantity }} × {{ heightLabel(i.variant.lengthMm) }} {{ i.variant.color }}</div>
+                  }
+                </td>
+                <td class="price">{{ euro(o.total) }}</td>
+                <td><span class="state" [class.paid]="o.paymentState === 'SETTLED'">{{ stateText(o.paymentState) }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    }
+
+    @if (tab() === 'materjalid') {
+    <!-- Turundusmaterjalid -->
+    <h2 class="section-title">Turundusmaterjalid</h2>
+    <div class="materials">
+      @for (m of materials; track m.src) {
+        <a class="material" [href]="m.src" download>
+          <img [src]="m.src" [alt]="m.name">
+          <span>{{ m.name }} ↓</span>
+        </a>
+      }
+    </div>
+    }
+  } @else {
+    <p class="muted empty">Vali ülalt partner, et näha tema kontot.</p>
+  }
+</section>

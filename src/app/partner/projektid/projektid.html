@@ -1,0 +1,166 @@
+<div class="head-row">
+  <p class="muted">Lisa oma kliendi projekt, saada talle hinnapakkumine ja kui klient kinnitab, telli materjalid ja tee kliendile arve.</p>
+  @if (!showForm()) {
+    <button type="button" (click)="newProject()">+ Uus projekt</button>
+  }
+</div>
+
+@if (showForm()) {
+  <form class="new-project" (ngSubmit)="saveProject()">
+    <h3>{{ editingId() ? 'Muuda projekti' : 'Uus projekt' }}</h3>
+    <div class="grid">
+      <label>Kliendi nimi *<input type="text" name="clientName" [(ngModel)]="clientName"></label>
+      <label>Telefon<input type="tel" name="clientPhone" [(ngModel)]="clientPhone"></label>
+      <label>E-post<input type="email" name="clientEmail" [(ngModel)]="clientEmail"></label>
+      <label>Objekti aadress *<input type="text" name="address" [(ngModel)]="address"></label>
+      <label>Paigalduse tähtaeg<input type="date" name="installDate" [(ngModel)]="installDate"></label>
+      <label>Allahindlus kliendile (%)<input type="number" min="0" max="100" name="discountPercent" [(ngModel)]="discountPercent"></label>
+      <label class="wide">Märkused<textarea name="notes" rows="2" [(ngModel)]="notes"></textarea></label>
+    </div>
+
+    <h4>Materjalid</h4>
+    @for (item of items; track $index; let i = $index) {
+      <div class="item-row">
+        <select [name]="'variant' + i" [(ngModel)]="item.variantId" aria-label="Toode">
+          <option [ngValue]="null">Vali kõrgus ja värv</option>
+          @for (v of variants(); track v.id) {
+            <option [ngValue]="v.id">WPC lipid {{ variantLabel(v) }}</option>
+          }
+        </select>
+        <input type="number" min="1" [name]="'qty' + i" [(ngModel)]="item.quantity" aria-label="Komplekte">
+        <span class="muted">komplekti</span>
+        @if (variantById(item.variantId); as v) {
+          @if (v.stock >= item.quantity) {
+            <span class="stock ok">Laos {{ v.stock }} tk</span>
+          } @else {
+            <span class="stock no">
+              Laos ainult {{ v.stock }} tk
+              @if (v.expectedDate) { · eeldatav tarneaeg {{ dateEt(v.expectedDate) }} }
+            </span>
+          }
+        }
+        @if (items.length > 1) {
+          <button type="button" class="link" (click)="removeItem(i)">Eemalda</button>
+        }
+      </div>
+    }
+    <button type="button" class="link" (click)="addItem()">+ Lisa toode</button>
+
+    <h4>Paigaldus</h4>
+    <div class="install">
+      <label class="check">
+        <input type="checkbox" name="installationManual" [(ngModel)]="installationManual">
+        Määran paigalduse hinna ise (nt punutud paigaldus)
+      </label>
+      @if (installationManual) {
+        <label>Paigaldustöö hind (km-ta, €)<input type="number" min="0" name="installationPrice" [(ngModel)]="installationPrice"></label>
+      } @else {
+        @if (partner().installationHourlyRate) {
+          <p class="calc">
+            {{ kitsInForm() }} komplekti × {{ hoursPerKit() }} h × {{ euro(partner().installationHourlyRate!) }} €/h =
+            <strong>{{ euro(calculatedInstallation()) }} €</strong> (km-ta)
+          </p>
+        } @else {
+          <p class="muted">Paigalduse tunnihind on määramata. Lisa see vahelehel „Ettevõtte andmed" või määra hind ise.</p>
+        }
+      }
+    </div>
+
+    @if (error()) { <p class="error">{{ error() }}</p> }
+    <div class="form-actions">
+      <button type="submit">{{ editingId() ? 'Salvesta muudatused' : 'Salvesta ja tee pakkumine' }}</button>
+      <button type="button" class="ghost" (click)="resetForm()">Tühista</button>
+    </div>
+  </form>
+}
+
+@if (message()) { <p class="ok-msg">{{ message() }}</p> }
+@if (error() && !showForm()) { <p class="error">{{ error() }}</p> }
+
+<div class="projects">
+  @for (p of projects(); track p.id) {
+    <div class="project" [class.done]="p.status === 'ORDERED'">
+      <div class="p-main">
+        <div class="p-title">
+          <h3>{{ p.clientName }}</h3>
+          <span class="status" [attr.data-status]="p.status">{{ statusText(p.status) }}</span>
+        </div>
+        <span class="muted">{{ p.address }}</span>
+        <div class="p-items">
+          @for (i of p.items; track i.id) {
+            <span [class.short]="p.status !== 'ORDERED' && !itemInStock(i.variant.id, i.quantity)">{{ i.quantity }} × {{ heightLabel(i.variant.lengthMm) }} {{ i.variant.color }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="p-date">
+        @if (p.installDate) {
+          <span class="muted small">Paigaldus</span>
+          <strong>{{ dateEt(p.installDate) }}</strong>
+          @if (p.status !== 'ORDERED') {
+            @if (daysLeft(p.installDate) >= 0) {
+              <span class="days" [class.soon]="daysLeft(p.installDate) <= 14">{{ daysLeft(p.installDate) }} päeva</span>
+            } @else {
+              <span class="days soon">tähtaeg möödas</span>
+            }
+          }
+        } @else {
+          <span class="muted small">Tähtaeg määramata</span>
+        }
+      </div>
+
+      <div class="p-sum">
+        <span class="muted small">Pakkumine kliendile</span>
+        <strong>{{ euro(offerTotals(p).grandTotal) }} €</strong>
+        <span class="muted small">sh paigaldus {{ euro(p.installationPrice) }} € km-ta</span>
+      </div>
+
+      <div class="p-actions">
+        <button type="button" class="ghost" (click)="offerProject.set(p)">Hinnapakkumine</button>
+        @if (canEdit(p)) {
+          <button type="button" class="ghost" (click)="edit(p)">Muuda</button>
+        }
+        @if (p.status === 'OFFER') {
+          <button type="button" (click)="confirm(p)">Klient kinnitas</button>
+          <button type="button" class="link" (click)="remove(p)">Kustuta</button>
+        }
+        @if (p.status === 'CONFIRMED') {
+          @if (canOrder(p)) {
+            <button type="button" (click)="order(p)">Telli materjalid</button>
+          } @else {
+            <button type="button" disabled>Telli materjalid</button>
+            <span class="stock no">Kõiki materjale pole laos</span>
+          }
+        }
+        @if (p.status === 'ORDERED') {
+          <span class="ordered">Tellimus nr {{ p.orderId }}</span>
+        }
+        @if (p.status !== 'OFFER') {
+          @if (p.invoiceId) {
+            <button type="button" class="ghost" (click)="openInvoice(p)">Arve</button>
+          } @else {
+            <button type="button" (click)="createInvoice(p)">Loo arve</button>
+          }
+        }
+      </div>
+    </div>
+  } @empty {
+    <p class="muted empty">Projekte veel ei ole.</p>
+  }
+</div>
+
+@if (offerProject(); as op) {
+  <app-pakkumine [project]="op" [partner]="partner()" (close)="offerProject.set(null)" />
+}
+
+@if (invoiceProject(); as ip) {
+  <app-arve-vorm [project]="ip" [partner]="partner()" (created)="onInvoiceCreated($event)" (close)="invoiceProject.set(null)" />
+}
+
+@if (invoice(); as inv) {
+  <app-pakkumine [project]="inv.project" [partner]="partner()" [invoice]="inv" (close)="invoice.set(null)" />
+}
+
+@if (toast()) {
+  <div class="toast" role="status">✓ {{ toast() }}</div>
+}

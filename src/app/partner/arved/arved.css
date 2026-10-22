@@ -1,0 +1,13 @@
+.section-title { font-size: 30px; margin: 0 0 16px; }
+.muted { color: var(--wpc-tekst-hall); }
+.table-box { overflow-x: auto; border: 1px solid var(--wpc-joon); border-radius: 20px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--wpc-joon); vertical-align: middle; }
+th { background: var(--wpc-pind); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+.price { font-weight: 900; white-space: nowrap; }
+.state { font-weight: 700; font-size: 14px; border-radius: 999px; padding: 3px 10px; background: #FFF6E5; color: #8A5300; white-space: nowrap; }
+.state.paid { background: #E3F4E8; color: #1B7A3A; }
+.state.late { background: #FDECEC; color: #B00020; }
+.actions { display: flex; gap: 8px; justify-content: flex-end; white-space: nowrap; }
+.ghost { background: #ffffff; color: var(--wpc-tume); border: 1px solid var(--wpc-tume); }
+.link { background: none; color: var(--wpc-roosa); padding: 0 8px; min-height: 36px; }

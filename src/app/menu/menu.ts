@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../services/cart';
 
@@ -10,4 +10,5 @@ import { CartService } from '../services/cart';
 })
 export class Menu {
   cart = inject(CartService);
+  open = signal(false); // kas telefoni menüü on lahti
 }

@@ -1,0 +1,54 @@
+<div class="overlay" (click)="close.emit()">
+  <form class="dialog" (click)="$event.stopPropagation()" (ngSubmit)="submit()">
+    <div class="title-row">
+      <h2>Koosta arve</h2>
+      <button type="button" class="x" (click)="close.emit()" aria-label="Sulge">×</button>
+    </div>
+    <p class="muted">Klient: <strong>{{ project().clientName }}</strong>, {{ project().address }}</p>
+
+    <div class="settings">
+      <label>Maksetähtaeg<input type="date" name="dueDate" [min]="today" [(ngModel)]="dueDate"></label>
+      <label>Allahindlus (%)<input type="number" min="0" max="100" name="discountPercent" [(ngModel)]="discountPercent"></label>
+    </div>
+
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr><th>Nimetus</th><th>Pikkus (mm)</th><th>Värvus</th><th>Kogus</th><th>Ühiku hind km-ta (€)</th><th>Summa (€)</th><th></th></tr>
+        </thead>
+        <tbody>
+          @for (line of lines; track $index; let i = $index) {
+            <tr>
+              <td><input type="text" [name]="'name' + i" [(ngModel)]="line.name" aria-label="Nimetus"></td>
+              <td><input type="number" class="num" [name]="'length' + i" [(ngModel)]="line.lengthMm" aria-label="Pikkus"></td>
+              <td><input type="text" class="short" [name]="'color' + i" [(ngModel)]="line.color" aria-label="Värvus"></td>
+              <td><input type="number" class="num" min="1" [name]="'qty' + i" [(ngModel)]="line.quantity" aria-label="Kogus"></td>
+              <!-- Näitame hinda sendini, aga täpne hind jääb alles, kuni partner seda ise muudab -->
+              <td><input type="number" class="num" min="0" step="0.01" [name]="'price' + i" [ngModel]="round2(line.unitPrice)" (ngModelChange)="line.unitPrice = $event" aria-label="Ühiku hind"></td>
+              <td class="sum">{{ euro(lineTotal(line)) }}</td>
+              <td><button type="button" class="link" (click)="removeLine(i)" aria-label="Eemalda rida">×</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="link add" (click)="addLine()">+ Lisa rida</button>
+
+    <table class="sums">
+      <tr><td>Kokku (km-ta):</td><td>{{ euro(totals().total) }} €</td></tr>
+      @if (totals().discount > 0) {
+        <tr><td>Allahindlus {{ discountPercent }}%:</td><td>-{{ euro(totals().discount) }} €</td></tr>
+        <tr><td>Vahesumma (km-ta):</td><td>{{ euro(totals().subtotal) }} €</td></tr>
+      }
+      <tr><td>KM (24%):</td><td>{{ euro(totals().vat) }} €</td></tr>
+      <tr class="grand"><td>Tasumisele:</td><td>{{ euro(totals().grandTotal) }} €</td></tr>
+    </table>
+
+    @if (error()) { <p class="error">{{ error() }}</p> }
+    <p class="muted small">Pärast arve koostamist projekti ja arvet enam muuta ei saa.</p>
+    <div class="actions">
+      <button type="submit" [disabled]="sending()">{{ sending() ? 'Koostan…' : 'Koosta arve' }}</button>
+      <button type="button" class="ghost" (click)="close.emit()">Tühista</button>
+    </div>
+  </form>
+</div>

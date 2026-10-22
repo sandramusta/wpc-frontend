@@ -2,7 +2,7 @@
   background: var(--wpc-tume);
   color: var(--wpc-roosa);
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   padding: 14px 16px;
 }
 
@@ -39,7 +39,7 @@ nav {
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px 28px;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
 }
 
@@ -55,8 +55,8 @@ nav a.active {
 }
 
 .header .btn {
-  padding: 20px 48px;
-  font-size: 19px;
+  padding: 16px 36px;
+  font-size: 16px;
   text-transform: uppercase;
 }
 
@@ -98,4 +98,32 @@ nav a.active {
   height: 26px;
   border-radius: 13px;
   font-size: 14px;
+}
+
+.burger, .nav-cta { display: none; }
+
+/* Telefon: logo, ostukorv ja ☰ nupp ühes reas. Menüü avaneb nupust päise alla. */
+@media (max-width: 760px) {
+  .topbar { font-size: 13px; padding: 8px 12px; }
+  .topbar .long { display: none; }
+  .header { position: relative; background: var(--wpc-tume); }
+  .header-inner { flex-wrap: nowrap; gap: 12px; padding: 10px 16px; }
+  .logo { margin-right: auto; }
+  .logo img { height: 56px; }
+  .header-cta { display: none; }
+  .cart-link { width: 48px; height: 48px; }
+  .cart-link svg { width: 24px; height: 24px; }
+  .burger {
+    display: flex; width: 48px; height: 48px; padding: 0; border-radius: 24px;
+    background: transparent; border: 1px solid rgba(255, 255, 255, 0.6); font-size: 22px;
+  }
+  nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 20;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--wpc-tume); padding: 8px 16px 20px; font-size: 18px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+  }
+  nav.open { display: flex; }
+  nav a { padding: 14px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); text-shadow: none; }
+  nav .nav-cta { display: flex; margin-top: 16px; border-bottom: none; color: #ffffff; }
 }

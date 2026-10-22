@@ -1,8 +1,9 @@
-<div class="topbar">Eesti esimesed vertikaalsed WPC aialipid 3D paneelaedadele</div>
+<div class="topbar">Eesti esimesed <span class="long">vertikaalsed </span>WPC aialipid<span class="long"> 3D paneelaedadele</span></div>
 <header class="header">
   <div class="header-inner">
     <a routerLink="/" class="logo"><img src="logo.png" alt="WPC.EE"></a>
-    <nav>
+    <!-- Telefonis on menüü peidus ja avaneb ☰ nupust -->
+    <nav [class.open]="open()" (click)="open.set(false)">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Esileht</a>
       <a routerLink="/e-pood" routerLinkActive="active">E-pood</a>
       <a routerLink="/galerii" routerLinkActive="active">Galerii</a>
@@ -10,8 +11,9 @@
       <a routerLink="/blogi" routerLinkActive="active">Blogi</a>
       <a routerLink="/kkk" routerLinkActive="active">KKK</a>
       <a routerLink="/edasimuujale" routerLinkActive="active">Edasimüüjale</a>
+      <a routerLink="/e-pood" fragment="paring" class="btn nav-cta">Küsi pakkumist</a>
     </nav>
-    <a routerLink="/e-pood" fragment="paring" class="btn">Küsi pakkumist</a>
+    <a routerLink="/e-pood" fragment="paring" class="btn header-cta">Küsi pakkumist</a>
     <a routerLink="/ostukorv" class="cart-link" aria-label="Ostukorv">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -23,5 +25,8 @@
       <span class="cart-count">{{ cart.count() }}</span>
       }
     </a>
+    <button type="button" class="burger" (click)="open.set(!open())" [attr.aria-expanded]="open()" aria-label="Menüü">
+      @if (open()) { ✕ } @else { ☰ }
+    </button>
   </div>
 </header>

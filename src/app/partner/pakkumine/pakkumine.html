@@ -1,0 +1,115 @@
+<div class="overlay" (click)="close.emit()">
+  <div class="dialog" (click)="$event.stopPropagation()">
+    <div class="actions no-print">
+      <button type="button" (click)="print()">Prindi / salvesta PDF</button>
+      <button type="button" class="ghost" (click)="close.emit()">Sulge</button>
+    </div>
+
+    <!-- See osa prinditakse -->
+    <div class="sheet print-area">
+      <header class="head">
+        @if (partner().logo) {
+          <img [src]="partner().logo" alt="{{ partner().company }} logo" class="logo">
+        } @else {
+          <span></span>
+        }
+        <div class="company">
+          <strong>{{ partner().company }}</strong>
+          @if (partner().companyAddress) { <span>{{ partner().companyAddress }}</span> }
+          <span>
+            @if (partner().phone) { Telefon: {{ partner().phone }} }
+            @if (partner().email) { | E-post: {{ partner().email }} }
+            @if (partner().website) { | {{ partner().website }} }
+          </span>
+        </div>
+      </header>
+
+      <h1>{{ invoice() ? 'ARVE' : 'HINNAPAKKUMINE' }}</h1>
+
+      <table class="info">
+        @if (invoice(); as inv) {
+          <tr><td>Arve nr:</td><td>{{ inv.number }}</td></tr>
+          <tr><td>Arve kuupäev:</td><td>{{ dateEt(inv.invoiceDate) }}</td></tr>
+          <tr><td>Maksetähtaeg:</td><td>{{ dateEt(inv.dueDate) }}</td></tr>
+          <tr><td>Pakkumise nr:</td><td>P-{{ project().id }}</td></tr>
+        } @else {
+          <tr><td>Pakkumise nr:</td><td>P-{{ project().id }}</td></tr>
+          <tr><td>Pakkumise kuupäev:</td><td>{{ dateEt(offerDate()) }}</td></tr>
+          <tr><td>Kehtiv kuni:</td><td>{{ dateEt(validUntil()) }}</td></tr>
+        }
+        <tr class="gap"><td>Kliendi nimi:</td><td>{{ project().clientName }}</td></tr>
+        <tr><td>Kontakt:</td><td>{{ project().clientPhone }}</td></tr>
+        <tr><td>E-post:</td><td>{{ project().clientEmail }}</td></tr>
+        <tr><td>Aadress:</td><td>{{ project().address }}</td></tr>
+        @if (project().installDate) {
+          <tr><td>Paigaldus:</td><td>{{ dateEt(project().installDate) }}</td></tr>
+        }
+      </table>
+
+      <table class="lines">
+        <thead>
+          <tr><th>Toote nimetus</th><th>Pikkus</th><th>Värvus</th><th>Kogus</th><th>Kaal (kg)</th><th>Ühiku hind (€)</th><th>Summa (€)</th></tr>
+        </thead>
+        <tbody>
+          @for (r of rows(); track $index) {
+            <tr>
+              <td>
+                {{ r.name }}
+                @if (r.item && showStock()) {
+                  <span class="avail" [class.no]="r.item.variant.stock < r.item.quantity">{{ availability(r.item) }}</span>
+                }
+              </td>
+              <td>@if (r.lengthMm) { {{ r.lengthMm }}mm }</td>
+              <td class="cap">{{ r.color }}</td>
+              <td>{{ r.quantity }}</td>
+              <td>@if (r.weight) { {{ r.weight.toFixed(1) }} }</td>
+              <td>{{ euro(r.unitPrice) }}</td>
+              <td>{{ euro(r.total) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <table class="sums">
+        <tr><td>Kokku (km-ta):</td><td>{{ euro(totals().total) }}</td></tr>
+        @if (totals().discount > 0) {
+          <tr><td>Allahindlus:</td><td>-{{ euro(totals().discount) }}</td></tr>
+          <tr><td>Vahesumma (km-ta):</td><td>{{ euro(totals().subtotal) }}</td></tr>
+        }
+        <tr><td>KM (24%):</td><td>{{ euro(totals().vat) }}</td></tr>
+        <tr class="grand"><td>Summa koos KM-ga:</td><td>{{ euro(totals().grandTotal) }}</td></tr>
+      </table>
+
+      @if (invoice(); as inv) {
+        <p class="pay">
+          Palume tasuda <strong>{{ euro(inv.grandTotal) }} €</strong> hiljemalt {{ dateEt(inv.dueDate) }}{{ partner().bankAccount ? ' arveldusarvele ' + partner().bankAccount : '' }}.
+          Selgitusse märkige arve number {{ inv.number }}.
+        </p>
+      } @else if (showStock()) {
+        <p class="note">
+          @if (shortItems().length === 0) {
+            Kõik pakkumisel olevad tooted on laos olemas.
+          } @else if (latestDate(); as d) {
+            Märkusega tooted on tellimisel. Kõik tooted on eeldatavalt olemas {{ dateEt(d) }}.
+          } @else {
+            Märkusega tooted on tellimisel, tarneaeg täpsustatakse.
+          }
+        </p>
+      }
+
+      <footer class="foot">
+        <div>
+          @if (partner().phone) { <span>Telefon {{ partner().phone }}</span> }
+          @if (partner().email) { <span>E-post {{ partner().email }}</span> }
+          @if (partner().website) { <span>Koduleht {{ partner().website }}</span> }
+        </div>
+        <div class="right">
+          @if (partner().bankName) { <span>{{ partner().bankName }}</span> }
+          @if (partner().bankAccount) { <span>IBAN {{ partner().bankAccount }}</span> }
+          @if (partner().companyRegCode) { <span>Reg. kood {{ partner().companyRegCode }}</span> }
+          @if (partner().vatNumber) { <span>KMKR {{ partner().vatNumber }}</span> }
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

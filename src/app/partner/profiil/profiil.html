@@ -1,0 +1,37 @@
+<form class="profile" (ngSubmit)="save()">
+  <div class="logo-box">
+    <span class="label">Logo</span>
+    @if (form.logo) {
+      <img [src]="form.logo" alt="Ettevõtte logo" class="logo">
+      <button type="button" class="link" (click)="removeLogo()">Eemalda logo</button>
+    } @else {
+      <div class="logo-empty">Logo puudub</div>
+    }
+    <label class="upload">
+      <input type="file" accept="image/*" (change)="onLogo($event)">
+      <span>Laadi logo üles</span>
+    </label>
+    <span class="muted small">PNG, JPG või SVG, kuni 500 KB</span>
+  </div>
+
+  <div class="fields">
+    <label>Ettevõtte nimi<input type="text" name="company" [(ngModel)]="form.company"></label>
+    <label>Registrikood<input type="text" name="companyRegCode" [(ngModel)]="form.companyRegCode"></label>
+    <label>KMKR number<input type="text" name="vatNumber" [(ngModel)]="form.vatNumber"></label>
+    <label class="wide">Aadress<input type="text" name="companyAddress" [(ngModel)]="form.companyAddress"></label>
+    <label>Telefon<input type="tel" name="phone" [(ngModel)]="form.phone"></label>
+    <label>E-post<input type="email" name="email" [(ngModel)]="form.email"></label>
+    <label>Koduleht<input type="text" name="website" [(ngModel)]="form.website"></label>
+    <label>Pank ja SWIFT<input type="text" name="bankName" [(ngModel)]="form.bankName" placeholder="nt SWEDBANK AS SWIFT HABAEE2X"></label>
+    <label>IBAN<input type="text" name="bankAccount" [(ngModel)]="form.bankAccount"></label>
+    <h3 class="wide">Paigaldus</h3>
+    <label>Paigalduse tunnihind (km-ta, €)<input type="number" min="0" step="0.5" name="installationHourlyRate" [(ngModel)]="form.installationHourlyRate"></label>
+    <label>Tunde ühe komplekti kohta<input type="number" min="0" step="0.25" name="installationHoursPerKit" [(ngModel)]="form.installationHoursPerKit" placeholder="1"></label>
+    <p class="wide muted small">Projekti paigalduse hind = komplektide arv × tunde komplekti kohta × tunnihind. Projektis saad hinna ka ise kirjutada.</p>
+    <div class="wide save-row">
+      <button type="submit">Salvesta</button>
+      @if (message()) { <span class="ok-msg">{{ message() }}</span> }
+      @if (error()) { <span class="error">{{ error() }}</span> }
+    </div>
+  </div>
+</form>
