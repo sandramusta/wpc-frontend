@@ -129,6 +129,27 @@ button:hover, .btn:hover {
   margin-top: auto;
 }
 
+/* Kontaktisik jaluses: ümmargune pilt, nimi ja telefon */
+.footer-contact {
+  gap: 14px;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  line-height: 1.4;
+}
+
+.person-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--wpc-roosa);
+  background: #4A585D;
+}
+
 
 /* Ülaosa pilt on kõigil lehtedel täpselt sama: sama tume kiht, pilt on ülaservast kinni
    ja alati sama laiusega. Nii ei hüppa pilt lehte vahetades, muutub ainult kõrgus. */

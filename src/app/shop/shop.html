@@ -84,12 +84,6 @@
     <div class="inquiry-text">
       <h2>Küsi pakkumist</h2>
       <p>Vastame tavaliselt sama päeva jooksul. Pakkumine on tasuta ega kohusta sind millekski.</p>
-      @if (selectedVariant()) {
-        <div class="choice">
-          Sinu valik: <strong>{{ heightLabel(selectedHeight) }}, {{ selectedColor }}, {{ quantity }} paneeli</strong>
-          <br>Hind kokku {{ euro(total()) }}
-        </div>
-      }
     </div>
 
     @if (sent) {
@@ -103,8 +97,8 @@
           <label>Eesnimi *
             <input type="text" name="firstName" [(ngModel)]="firstName" required>
           </label>
-          <label>Perenimi
-            <input type="text" name="lastName" [(ngModel)]="lastName">
+          <label>Perenimi*
+            <input type="text" name="lastName" [(ngModel)]="lastName" required>
           </label>
         </div>
         <div class="row">

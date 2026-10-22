@@ -1,59 +1,80 @@
-# VeebipoodFrontend
+# WPC.EE frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.4.
+Angulari rakendus WPC.EE kodulehele, e-poele ja B2B partnerikontole. Backend on eraldi repos [wpc.ee](https://github.com/sandramusta/wpc.ee).
 
-## Development server
+Projekt on IT-kursuse lõputöö ja põhineb kursusel tehtud veebipoe projektil ([veebipood-frontend](https://github.com/sandramusta/veebipood-frontend)).
 
-To start a local development server, run:
+## Lehed
 
-```bash
-ng serve
-```
+| Aadress | Kaust | Sisu |
+| --- | --- | --- |
+| `/` | `home` | Avaleht: eelised, enne ja pärast, TTÜ tulemused, ESTO, „Leia paigaldaja", edasimüüjad, galerii |
+| `/e-pood` | `shop` | Toode: kõrgus, värv, kogus, hind, laoseis, ostukorvi lisamine ja päringuvorm |
+| `/ostukorv` | `cart` | Ostukorv, tarne, kliendi andmed, makse |
+| `/makse` | `payment-result` | Makse tulemus pärast EveryPay'd |
+| `/galerii` | `gallery` | Tehtud tööde pildid |
+| `/juhendid` | `guides` | Ostu- ja paigaldusjuhend koos videoga |
+| `/kkk` | `faq` | Korduma kippuvad küsimused |
+| `/edasimuujale` | `resellers` | Miks hakata partneriks ja kandideerimise vorm |
+| `/partner` | `partner` | B2B partnerikonto: projektid, pakkumised, arved, tootekataloog, tellimused |
+| `/blogi` | `coming-soon` | Valmimisel |
+| muu | `not-found` | 404 leht |
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Kood (kaustad, failid, klassid) on inglise keeles, lehe tekstid ja aadressid eesti keeles.
 
-## Code scaffolding
+## Tehnoloogiad
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Angular 22, standalone komponendid
+- `signal`, `computed`, `input()`, `output()`, mallides `@if` ja `@for`
+- `HttpClient` backendiga suhtlemiseks
+- `@ngx-env/builder` backendi aadressi jaoks (`NG_APP_API_URL`)
 
-```bash
-ng generate component component-name
-```
+## Käivitamine
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Vaja on Node.js versiooni 22.22 või uuemat.
 
 ```bash
-ng test
+npm install
+npm start
 ```
 
-## Running end-to-end tests
+Ava brauseris **`http://lvh.me:4200`**.
 
-For end-to-end (e2e) testing, run:
+Backend peab töötama aadressil `http://localhost:8080` (vt backendi README). Teise aadressi saab anda keskkonnamuutujaga `NG_APP_API_URL`.
+
+### Miks `lvh.me:4200`, mitte `localhost:4200`
+
+EveryPay ei luba makse järel tagasi suunata `localhost` aadressile. `lvh.me` suunab samuti sinu enda arvutisse, aga EveryPay võtab selle vastu. Selleks on `angular.json`-is `"host": "127.0.0.1"` ja `"allowedHosts": ["lvh.me"]`.
+
+Kasuta algusest lõpuni sama aadressi. Ostukorv on brauseri `localStorage`'is ja see on iga aadressi jaoks eraldi.
+
+## Kaustad
+
+```
+src/
+  styles.css          brändi värvid, kirjasuurused (--fs-body jne), jalus, prindireeglid
+  app/
+    app.routes.ts     aadressid ja nende komponendid
+    menu/             päis ja menüü (telefonis ☰)
+    services/cart.ts  ostukorv (localStorage, võti wpc-cart)
+    models/           Product, ProductVariant, Category
+    data/partners.ts  paigaldajad ja edasimüüjad avalehel
+    partner/          partnerikonto ja selle osad:
+      projects/       projektid ja projekti vorm
+      offer/          hinnapakkumine ja arve (prinditav, A4)
+      invoice-form/   arve koostamise aken
+      invoices/       arvete nimekiri
+      profile/        ettevõtte andmed, logo, tunnihind
+public/
+  images/             pildid (images/guide juhendi pildid, images/team meeskond)
+  partners/           edasimüüjate logod
+  logo.png, wpc-icon.png
+```
+
+## Ehitamine
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Valmis failid tulevad kausta `dist/wpc-frontend/browser`.
