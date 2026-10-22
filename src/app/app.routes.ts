@@ -1,26 +1,26 @@
 import { Routes } from '@angular/router';
-import { Esileht } from './esileht/esileht';
-import { Homepage } from './homepage/homepage';
-import { Galerii } from './galerii/galerii';
-import { Kkk } from './kkk/kkk';
-import { Juhendid } from './juhendid/juhendid';
-import { Ostukorv } from './ostukorv/ostukorv';
-import { Makse } from './makse/makse';
+import { Home } from './home/home';
+import { Shop } from './shop/shop';
+import { Gallery } from './gallery/gallery';
+import { Faq } from './faq/faq';
+import { Guides } from './guides/guides';
+import { Cart } from './cart/cart';
+import { PaymentResult } from './payment-result/payment-result';
 import { PartnerPage } from './partner/partner';
-import { Tulekul } from './tulekul/tulekul';
+import { ComingSoon } from './coming-soon/coming-soon';
+import { Resellers } from './resellers/resellers';
 import { NotFound } from './not-found/not-found';
-import { Edasimuujale } from './edasimuujale/edasimuujale';
 
 export const routes: Routes = [
-    {path: '', component: Esileht},
-    {path: 'e-pood', component: Homepage},
-    {path: 'galerii', component: Galerii},
-    {path: 'kkk', component: Kkk},
-    {path: 'ostukorv', component: Ostukorv},
-    {path: 'makse', component: Makse},
+    {path: '', component: Home},
+    {path: 'e-pood', component: Shop},
+    {path: 'galerii', component: Gallery},
+    {path: 'kkk', component: Faq},
+    {path: 'ostukorv', component: Cart},
+    {path: 'makse', component: PaymentResult},
     {path: 'partner', component: PartnerPage},
-    {path: 'juhendid', component: Juhendid},
-    {path: 'blogi', component: Tulekul, data: {title: 'Blogi'}},
-    { path: 'edasimuujale', component: Edasimuujale },
+    {path: 'juhendid', component: Guides},
+    {path: 'blogi', component: ComingSoon, data: {title: 'Blogi'}},
+    {path: 'edasimuujale', component: Resellers},
     {path: '**', component: NotFound},
 ];

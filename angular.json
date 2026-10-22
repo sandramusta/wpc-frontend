@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "veebipood-frontend": {
+    "wpc-frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -60,10 +60,10 @@
                             },
                   "configurations": {
             "production": {
-              "buildTarget": "veebipood-frontend:build:production"
+              "buildTarget": "wpc-frontend:build:production"
             },
             "development": {
-              "buildTarget": "veebipood-frontend:build:development"
+              "buildTarget": "wpc-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

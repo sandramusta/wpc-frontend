@@ -1,0 +1,82 @@
+<section class="page-hero">
+  <h1>Ostukorv</h1>
+  <p>Vaata oma valik üle ja vormista tellimus.</p>
+</section>
+
+<section class="container cart-page">
+  @if (orderId()) {
+    <div class="done">
+      <span class="done-icon warn" aria-hidden="true">!</span>
+      <h2>Makselehte ei õnnestunud avada</h2>
+      <p>Tellimus nr {{ orderId() }} on salvestatud, aga makse jäi tegemata. Proovi uuesti või kirjuta info@wpc.ee.</p>
+      <button type="button" class="order-btn" [disabled]="sending()" (click)="retryPayment()">{{ sending() ? 'Suunan maksma…' : 'Proovi uuesti maksta' }}</button>
+    </div>
+  } @else if (cart.items().length === 0) {
+    <div class="empty">
+      <h2>Ostukorv on tühi</h2>
+      <p>Vali e-poes kõrgus ja värv ning lisa komplektid ostukorvi.</p>
+      <a routerLink="/e-pood" class="btn">Mine e-poodi</a>
+    </div>
+  } @else {
+    <div class="cart-grid">
+      <div class="items">
+        @for (item of cart.items(); track item.variantId) {
+          <div class="item">
+            <img [src]="'images/' + item.color + '.jpg'" [alt]="item.color" class="item-img">
+            <div class="item-info">
+              <h3>{{ item.name }}</h3>
+              <span class="muted">{{ heightLabel(item.heightMm) }} · {{ item.color }} · {{ euro(item.price) }} / komplekt</span>
+            </div>
+            <div class="stepper">
+              <button type="button" aria-label="Vähem" (click)="cart.setQuantity(item.variantId, item.quantity - 1)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button type="button" aria-label="Rohkem" (click)="cart.setQuantity(item.variantId, item.quantity + 1)">+</button>
+            </div>
+            <span class="item-total">{{ euro(item.price * item.quantity) }}</span>
+            <button type="button" class="remove" aria-label="Eemalda" (click)="cart.remove(item.variantId)">✕</button>
+          </div>
+        }
+        <a routerLink="/e-pood" class="back">← Jätka ostlemist</a>
+      </div>
+
+      <form class="checkout" (ngSubmit)="submitOrder()">
+        <h2>Tellija andmed</h2>
+        <div class="row">
+          <label>Eesnimi *<input type="text" name="firstName" [(ngModel)]="firstName" required></label>
+          <label>Perenimi<input type="text" name="lastName" [(ngModel)]="lastName"></label>
+        </div>
+        <div class="row">
+          <label>E-post *<input type="email" name="email" [(ngModel)]="email" required></label>
+          <label>Telefon *<input type="tel" name="phone" [(ngModel)]="phone" required></label>
+        </div>
+
+        <fieldset class="delivery">
+          <legend>Tarne</legend>
+          <label class="radio">
+            <input type="radio" name="delivery" value="venipak" [(ngModel)]="delivery">
+            <span>Kuller (Venipak) <small>tarne hinna kohta võtame sinuga ühendust</small></span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="delivery" value="jarele" [(ngModel)]="delivery">
+            <span>Tulen ise järele <small>Pihlaka tee 33, Haaslava</small></span>
+          </label>
+        </fieldset>
+        @if (delivery === 'venipak') {
+          <label>Tarneaadress *<input type="text" name="address" [(ngModel)]="address" placeholder="Tänav, maja, linn, postiindeks"></label>
+        }
+        <label>Märkus<textarea name="message" rows="3" [(ngModel)]="message"></textarea></label>
+
+        <div class="sum">
+          <div class="sum-row"><span>Komplekte</span><span>{{ cart.count() }}</span></div>
+          <div class="sum-row total"><span>Kokku</span><span>{{ euro(cart.total()) }}</span></div>
+          <span class="muted small">Hind sisaldab käibemaksu. Maksad pangalingi või kaardiga EveryPay turvalisel makselehel.</span>
+        </div>
+
+        @if (error()) {
+          <p class="error">{{ error() }}</p>
+        }
+        <button type="submit" class="order-btn" [disabled]="sending()">{{ sending() ? 'Suunan maksma…' : 'Maksa ' + euro(cart.total()) }}</button>
+      </form>
+    </div>
+  }
+</section>

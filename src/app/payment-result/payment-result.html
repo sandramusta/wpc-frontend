@@ -1,0 +1,35 @@
+<section class="page-hero">
+  <h1>Makse</h1>
+</section>
+
+<section class="result">
+  @switch (state()) {
+    @case ('loading') {
+      <p class="muted">Kontrollin makset…</p>
+    }
+    @case ('SETTLED') {
+      <span class="icon ok" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>
+      </span>
+      <h2>Aitäh! Makse õnnestus.</h2>
+      <p>Tellimus nr {{ orderId() }} on makstud. Saadame kinnituse e-postiga ja anname teada, kui kaup teele läheb.</p>
+      <a routerLink="/" class="btn">Tagasi esilehele</a>
+    }
+    @case ('INITIAL') {
+      <h2>Makse on töötlemisel</h2>
+      <p>Tellimus nr {{ orderId() }} on salvestatud. Pank pole makset veel kinnitanud. Anname teada, kui makse kohale jõuab.</p>
+      <a routerLink="/" class="btn">Tagasi esilehele</a>
+    }
+    @case ('error') {
+      <h2>Makse tulemust ei õnnestunud kontrollida</h2>
+      <p>Kui raha läks kontolt maha, on tellimus kindlasti salvestatud. Küsimuste korral kirjuta info@wpc.ee.</p>
+      <a routerLink="/" class="btn">Tagasi esilehele</a>
+    }
+    @default {
+      <span class="icon fail" aria-hidden="true">✕</span>
+      <h2>Makse ei õnnestunud</h2>
+      <p>Tellimus nr {{ orderId() }} on salvestatud, aga makset ei tehtud. Tooted on endiselt ostukorvis, nii et saad uuesti proovida. Küsimuste korral kirjuta info@wpc.ee.</p>
+      <a routerLink="/ostukorv" class="btn">Tagasi ostukorvi</a>
+    }
+  }
+</section>

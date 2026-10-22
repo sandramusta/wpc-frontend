@@ -50,15 +50,15 @@
     </nav>
 
     @if (tab() === 'projektid') {
-      <app-projektid [partner]="p" [variants]="variants()" (ordered)="onProjectOrdered()" />
+      <app-projects [partner]="p" [variants]="variants()" (ordered)="onProjectOrdered()" />
     }
 
     @if (tab() === 'arved') {
-      <app-arved [partner]="p" />
+      <app-invoices [partner]="p" />
     }
 
     @if (tab() === 'andmed') {
-      <app-profiil [partner]="p" (saved)="onProfileSaved($event)" />
+      <app-profile [partner]="p" (saved)="onProfileSaved($event)" />
     }
 
     @if (tab() === 'tellimine') {

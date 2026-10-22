@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { Product } from '../models/Product';
 import { ProductVariant } from '../models/ProductVariant';
 import { Partner } from './partner-types';
-import { Projektid } from './projektid/projektid';
-import { Profiil } from './profiil/profiil';
-import { Arved } from './arved/arved';
+import { Projects } from './projects/projects';
+import { Profile } from './profile/profile';
+import { Invoices } from './invoices/invoices';
 
 type PartnerOrder = {
   id: number;
@@ -21,7 +21,7 @@ type PartnerOrder = {
 // siin valitakse partner nimekirjast, et vaadet saaks näidata.
 @Component({
   selector: 'app-partner',
-  imports: [FormsModule, Projektid, Profiil, Arved],
+  imports: [FormsModule, Projects, Profile, Invoices],
   templateUrl: './partner.html',
   styleUrl: './partner.css',
 })
@@ -43,12 +43,12 @@ export class PartnerPage {
   sending = signal(false);
 
   materials = [
-    { src: 'pildid/tumehall.jpg', name: 'Tumehall lähedalt' },
-    { src: 'pildid/pruun.jpg', name: 'Pruun lähedalt' },
-    { src: 'pildid/punutud.jpg', name: 'Punutud stiil' },
-    { src: 'pildid/enne-parast.jpg', name: 'Enne ja pärast' },
-    { src: 'pildid/kaks-varvi.jpg', name: 'Kaks värvi' },
-    { src: 'pildid/hero.jpg', name: 'Aed uusarenduses' },
+    { src: 'images/tumehall.jpg', name: 'Tumehall lähedalt' },
+    { src: 'images/pruun.jpg', name: 'Pruun lähedalt' },
+    { src: 'images/woven.jpg', name: 'Punutud stiil' },
+    { src: 'images/before-after.jpg', name: 'Enne ja pärast' },
+    { src: 'images/two-colors.jpg', name: 'Kaks värvi' },
+    { src: 'images/hero.jpg', name: 'Aed uusarenduses' },
   ];
 
   // Variandid kõrguse ja värvi järgi järjestatud

@@ -1,0 +1,267 @@
+<!-- 1. Suur avapilt koos ujuvate kastidega -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <h1>Hooldusvaba privaatsus sinu hoovis</h1>
+      <p>Muuda olemasolev 3D paneelaed privaatseks. Naabrid ei näe enam otse hoovi ja värvima ei pea kunagi.</p>
+      <div class="hero-buttons">
+        <a routerLink="/e-pood" class="btn btn-big">Vaata e-poodi</a>
+        <a routerLink="/" fragment="paigaldaja" class="btn btn-big btn-glass">Leia paigaldaja</a>
+      </div>
+    </div>
+    <div class="float-cards">
+      <div class="float-card c1"><strong>alates 113 €</strong><span>komplekt ühele 2,5 m paneelile</span></div>
+      <div class="float-card c2"><strong>30–45 min</strong><span>paigaldus paneeli kohta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Kiirelt loetavad omadused -->
+<section class="checks">
+  <div class="container checks-inner">
+    @for (c of checks; track c) {
+      <div class="check">
+        <svg class="check-icon" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+          <circle cx="26" cy="30" r="21" stroke="currentColor" stroke-width="5"></circle>
+          <path d="M16 29l9 9L50 8" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span>{{ c }}</span>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- 3. Miks valida: pilt keskel, numbrid sellel -->
+<section class="why">
+  <div class="container why-inner">
+    <div class="why-title">
+      <span class="eyebrow pink">Miks WPC aialipid</span>
+      <h2>Miks valida WPC aialipid?</h2>
+      <p class="muted">Lipid paigaldatakse olemasolevale 3D paneelaiale. Sinu aed jääb samaks, aga muutub privaatseks.</p>
+      <a routerLink="/e-pood" class="btn btn-big">Vali kõrgus ja värv</a>
+    </div>
+    <div class="why-image">
+      <img src="images/close-up.jpg" alt="WPC lipid 3D paneelaial lähedalt">
+    </div>
+    <ol class="why-list">
+      @for (r of reasons; track r.title; let i = $index) {
+        <li class="why-item">
+          <span class="why-number">{{ i + 1 }}</span>
+          <div>
+            <h3>{{ r.title }}</h3>
+            <p>{{ r.text }}</p>
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- TTÜ katsetulemused -->
+<section class="lab">
+  <div class="container">
+    <div class="lab-head">
+      <span class="eyebrow pink">Laborikatse</span>
+      <h2>Testitud <span class="pink">Tallinna Tehnikaülikoolis</span></h2>
+      <p>TalTechi puidutehnoloogia laboris olid hallid lipid 2000 tundi tugeva UV-valguse all. See vastab mitmele aastale päikese käes.</p>
+    </div>
+    <div class="lab-cards">
+      <div class="lab-card">
+        <span class="lab-big">2000 h</span>
+        <h3>Tugevat UV-valgust</h3>
+        <p>Katse ISO 16616 järgi. Nii pikalt püsisid lipid laboris päikest asendava valguse all.</p>
+      </div>
+      <div class="lab-card">
+        <span class="lab-big">ΔE 1,30</span>
+        <h3>Värv säilib</h3>
+        <p>Värvimuutus on nii väike, et seda on palja silmaga vaevu näha. Märkad ainult lähedalt ja kõrvutades.</p>
+      </div>
+      <div class="lab-card">
+        <span class="lab-big">5,56 → 5,90</span>
+        <h3>Sama tugev</h3>
+        <p>Löögitugevus (kJ/m²) enne ja pärast UV-katset. See ei vähenenud: päike ei tee lippe hapramaks.</p>
+      </div>
+    </div>
+    <details class="lab-all">
+      <summary>Vaata kõiki katsetulemusi</summary>
+      <table>
+        <thead><tr><th>Katse</th><th>Tulemus</th><th>Mida see tähendab</th></tr></thead>
+        <tbody>
+          @for (t of labTulemused; track t.katse) {
+            <tr><td>{{ t.katse }}</td><td class="nowrap">{{ t.tulemus }}</td><td>{{ t.tahendus }}</td></tr>
+          }
+        </tbody>
+      </table>
+      <p class="lab-note">TalTechi puidutehnoloogia labor, protokoll nr 11-40/EK/87-2 (08.07.2026). Katsetati halle lippe paksusega 4,1 mm.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 4. Kas kõlab tuttavalt ja millest WPC koosneb -->
+<section class="pains-section">
+  <div class="container pains-inner">
+    <div class="pains-col">
+      <h2>Kas kõlab tuttavalt?</h2>
+      <ul class="pains">
+        <li>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3.5"></circle></svg>
+          Naabrid näevad otse hoovi
+        </li>
+        <li>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="15" height="6" rx="1.5"></rect><path d="M18 6h2.5v5H11v3"></path><rect x="9.5" y="14" width="3" height="7" rx="1"></rect></svg>
+          Puitaed vajab iga-aastast värvimist
+        </li>
+        <li>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2.5"></circle><path d="M6 9.5v5M18 9.5v5"></path></svg>
+          PVC näeb odav välja
+        </li>
+        <li>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><path d="M9 9h.01M15 9h.01"></path></svg>
+          Tahaks privaatsust, aga mitte lõputut hooldust
+        </li>
+      </ul>
+    </div>
+    <div class="pains-col">
+      <h2>WPC materjal koosneb:</h2>
+      <div class="material">
+        @for (m of material; track m.osa) {
+          <div class="material-row">
+            <div class="material-head">
+              <span class="material-pct">{{ m.pct }}%</span>
+              <span class="material-name">{{ m.osa }}</span>
+            </div>
+            <div class="bar"><div class="bar-fill" [style.width.%]="m.pct"></div></div>
+            <span class="muted">{{ m.miks }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Enne ja pärast -->
+<section class="before-after">
+  <div class="container ba-inner">
+    <img src="images/before-after.jpg" alt="Sama aed enne ja pärast WPC lippe" class="ba-img">
+    <div class="ba-text">
+      <span class="eyebrow pink">Enne ja pärast</span>
+      <h2>Sama aed, aga privaatne</h2>
+      <p>WPC lipid lähevad sinu olemasolevale aiale. Võid katta kõik paneelid, ainult maja ees olevad või iga teise. Valikuid on just nii palju, kui palju on sul fantaasiat.</p>
+      <a routerLink="/e-pood" class="btn btn-big">Vali kõrgus ja värv</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. ESTO järelmaks -->
+<section class="container section esto">
+  <a href="https://esto.ee" target="_blank" rel="noopener" class="esto-link">
+    <img src="images/esto.jpg" alt="ESTO: tasu osade kaupa" class="esto-banner">
+  </a>
+  <div class="esto-text">
+    <h2>Maksa kolmes osas, lisatasuta</h2>
+    <p>ESTO 3-ga jagad summa kolmeks võrdseks osaks ja lisatasu ei maksa. Järelmaksu saab ka ettevõte.</p>
+    <a routerLink="/e-pood" class="btn">Vali oma komplekt</a>
+  </div>
+</section>
+
+<!-- Leia paigaldaja -->
+<section id="paigaldaja" class="installers">
+  <div class="container installers-inner">
+    <div class="installers-text">
+      <span class="eyebrow pink">Paigaldus</span>
+      <h2>Leia paigaldaja</h2>
+      <p class="lead">Vali oma linn või luba kasutada oma asukohta. Näitame paigaldajaid, alustades kõige lähemast.</p>
+      <div class="finder">
+        <label class="finder-select">
+          <span>Sinu linn</span>
+          <select (change)="valiLinn($any($event.target).value)">
+            <option value="">Vali linn</option>
+            @for (l of linnad; track l.nimi) {
+              <option [value]="l.nimi">{{ l.nimi }}</option>
+            }
+          </select>
+        </label>
+        <button type="button" class="btn-location" (click)="minuAsukoht()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path><circle cx="12" cy="12" r="8"></circle></svg>
+          Kasuta minu asukohta
+        </button>
+      </div>
+      @if (asukohaViga()) {
+        <p class="error">{{ asukohaViga() }}</p>
+      }
+    </div>
+
+    <div class="installers-results">
+      @if (asukoht()) {
+        <p class="result-title">Lähim asukohale: {{ asukohaNimi() }}</p>
+        @for (p of lahimad(); track p.nimi; let i = $index) {
+          <div class="installer" [class.nearest]="i === 0">
+            @if (i === 0) {
+              <span class="nearest-badge">Kõige lähemal</span>
+            }
+            <h3>{{ p.nimi }}</h3>
+            <span class="muted">{{ p.linn }} · umbes {{ p.kaugus }} km</span>
+            <div class="contacts">
+              @if (p.telefon) { <a [href]="'tel:' + p.telefon">{{ p.telefon }}</a> }
+              @if (p.email) { <a [href]="'mailto:' + p.email">{{ p.email }}</a> }
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="installers-empty">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+          <p>Vali linn ja näitame sulle kõige lähemat paigaldajat.</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Edasimüüjad logodena -->
+<section class="container section dealers-section">
+  <span class="eyebrow pink">Kust osta</span>
+  <h2>Edasimüüjad</h2>
+  <div class="logo-wall">
+    @for (d of edasimuujad; track d.nimi) {
+      <a class="logo-card" [href]="d.veeb ?? ('mailto:' + d.email)" target="_blank" rel="noopener" [attr.aria-label]="d.nimi + ', ' + d.linn">
+        @if (d.logo) {
+          <img [src]="d.logo" [alt]="d.nimi">
+        } @else {
+          <span class="logo-text">{{ d.nimi }}</span>
+        }
+        <span class="logo-city">{{ d.linn }}</span>
+      </a>
+    }
+    <a routerLink="/edasimuujale" class="logo-card logo-join">
+      <span class="join-plus" aria-hidden="true">+</span>
+      <span>Saa edasimüüjaks</span>
+    </a>
+  </div>
+</section>
+
+<!-- 7. Galerii -->
+<section class="container section">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow pink">Tehtud tööd</span>
+      <h2>Galerii</h2>
+    </div>
+    <a routerLink="/galerii" class="see-all">Vaata kõiki →</a>
+  </div>
+  <div class="gallery-grid">
+    @for (img of galerii; track img) {
+      <a routerLink="/galerii" class="gallery-item"><img [src]="img" alt="WPC aialipid paneelaial"></a>
+    }
+  </div>
+</section>
+
+<!-- 8. Lõpu üleskutse -->
+<section class="cta">
+  <div class="container cta-inner">
+    <h2>Astu esimene samm privaatse aia suunas juba täna</h2>
+    <div class="hero-buttons">
+      <a routerLink="/e-pood" class="btn btn-big btn-white">Vaata e-poodi</a>
+      <a routerLink="/e-pood" fragment="paring" class="btn btn-big btn-glass">Küsi pakkumist</a>
+    </div>
+  </div>
+</section>
